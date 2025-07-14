@@ -12,7 +12,12 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const client = new MongoClient(process.env.MONGODB_URI);
+    const client = new MongoClient(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000,
+    connectTimeoutMS: 10000,
+  });
     await client.connect();
     
     const db = client.db('canosolutions');
