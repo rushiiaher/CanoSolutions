@@ -16,7 +16,7 @@ export default function NewsletterSubscription() {
     setMessage("")
 
     try {
-      const response = await fetch('/api/subscribe', {
+      const response = await fetch('/.netlify/functions/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

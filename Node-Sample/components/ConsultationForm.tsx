@@ -53,7 +53,7 @@ export default function ConsultationForm({
     setSubmitMessage('')
 
     try {
-      const response = await fetch('/api/inquiry', {
+      const response = await fetch('/.netlify/functions/inquiry', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
