@@ -21,6 +21,10 @@ exports.handler = async (event, context) => {
     await client.connect();
     
     const db = client.db('canosolutions');
+    
+    // Create collections if they don't exist
+    await db.createCollection('subscriptions').catch(() => {});
+    await db.createCollection('inquiries').catch(() => {});
     await db.admin().ping();
     
     const collections = await db.listCollections().toArray();
