@@ -102,7 +102,7 @@ export default function Header() {
               
               {/* Dropdown Menu */}
               {isServicesOpen && (
-                <div className="absolute top-full left-0 mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50">
+                <div className="absolute top-full left-0 mt-0 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50">
                   <div className="p-2">
                     {services.map((service) => {
                       const IconComponent = service.icon
