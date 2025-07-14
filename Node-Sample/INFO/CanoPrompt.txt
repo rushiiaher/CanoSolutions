@@ -1,0 +1,63 @@
+
+
+You are an expert web design and development assistant specialized in creating **modern, professional, and futuristic websites** for tech startups.
+
+I am building a website for my startup named **CanoSolutions**. I have attached a set of `.txt` files containing:
+
+* Brand and design guidelines
+* Information about our startup
+* Key technologies we focus on
+* Target audience insights
+* Unique selling points (USPs)
+* Visual and functional preferences
+
+### 🎯 **Goal**
+
+Using the contents of the attached `.txt` files, generate a comprehensive prompt that can be used with a generative AI tool (like a no-code website builder or AI designer) to build a **visually stunning, highly engaging, and strategically optimized website** for CanoSolutions.
+
+### ✨ **Design and Functional Expectations**
+
+* The **homepage** should be *aesthetically futuristic, minimal yet visually rich*, and immediately communicate what CanoSolutions does.
+
+  * Include dynamic content sections for trending tech stacks we work on (e.g., AI, IoT, Cloud, Blockchain).
+  * Each tech section on the homepage should redirect users to a **dedicated inner page** with:
+
+    * A deeper explanation of our services in that domain
+    * Real-life use cases or project examples
+    * Testimonials from clients in that domain
+* Design should be **responsive**, **clean**, and **conversion-focused**.
+* Include **clear CTAs**, animated transitions, and professional micro-interactions for engagement.
+
+### 🔍 **Benchmarking & Competitive Analysis**
+
+Use leading websites like **Tech Mahindra**, **Infosys**, and **Neil Patel's agency site** as design and UX references.
+
+* **From them, adopt**:
+
+  * High-contrast sections
+  * Strategic layout of testimonials and case studies
+  * Professional tone with accessible design
+* **Improve on them by**:
+
+  * Avoiding cluttered information blocks
+  * Using more interactive, user-driven experiences (e.g., hover-based tech stack exploration)
+  * Creating a seamless mobile-first experience
+  * Using storytelling and strong branding on every scroll
+
+### 📦 **Prompt Output Requirement**
+
+* Structure a clear, detailed, and technically sound prompt for an AI web design agent (e.g., Sora, Wix AI, Framer AI) that includes:
+
+  * Overall layout suggestions
+  * Color and typography guidance (based on our brand guide in the `.txt` files)
+  * Content block structure for each page
+  * Flow of user journey from homepage to inner pages
+  * Animation and interactivity suggestions
+  * Keywords and SEO structuring for discoverability
+
+**Final output should result in a website that:**
+
+* Represents CanoSolutions as a **cutting-edge, professional, and trustworthy** startup in the IT/tech domain
+* Offers a clear product/service narrative
+* Engages visitors and increases conversions through intelligent design and experience
+* Don't Need to Give any sample code inside the prompt.

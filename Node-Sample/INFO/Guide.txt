@@ -1,0 +1,89 @@
+What To DO in the Prompt (Essentials for a Futuristic, Aesthetic, and Professional Website):
+Design Language:
+
+Use a minimalistic and clean UI.
+
+Follow a modern grid layout with proper spacing and alignment.
+
+Emphasize flat design or neumorphism with subtle shadows.
+
+Color Palette:
+
+Stick to a monotone or duotone color scheme.
+
+Prefer neutral tones (like #111, #222, #e0e0e0) with 1–2 accent colors.
+
+Example: black, white, gray, with one accent like blue or green.
+
+Typography:
+
+Use only professional fonts (e.g., Inter, IBM Plex Sans, Roboto, Open Sans).
+
+Avoid fancy or playful fonts.
+
+Ensure good readability and hierarchy (heading size difference, weight).
+
+Components:
+
+Ask for essential UI components: navbar, hero section, service cards, contact form, CTA buttons.
+
+Include clean icons (Lucide, Tabler, Material), not emojis.
+
+Overall Vibe:
+
+Ask for a sleek, corporate, and tech-forward aesthetic.
+
+Use phrases like:
+
+“modern and corporate”
+
+“clean and professional”
+
+“suitable for a tech company or IT consultancy”
+
+Content Structure:
+
+Prioritize clarity and simplicity in text blocks.
+
+Ensure each section communicates a purpose (services, benefits, testimonials, contact, about).
+
+Accessibility:
+
+Ask for accessible color contrasts and responsive layouts.
+
+❌ What NOT To Do in the Prompt (Avoid These Pitfalls):
+No Gradients Everywhere:
+
+Say "Avoid excessive color gradients on text or buttons."
+
+Gradients should be minimal or subtle if used at all.
+
+No Emojis or Decorative Icons:
+
+Add: "Do not use emojis in any text or heading."
+
+Use clean line icons instead.
+
+No Overused Trendy Effects:
+
+Avoid glassmorphism, glitch effects, bouncing animations, neon borders, etc.
+
+Say: "Avoid funky, trendy, or over-animated elements."
+
+No Fancy Fonts or Comic Style:
+
+Avoid cursive, comic sans, handwritten, or bubbly fonts.
+
+Say: "Use only clean, readable sans-serif fonts suitable for professional use."
+
+No Overcrowded Layouts:
+
+Say: "Keep layout breathable with enough white space."
+
+Avoid cramming cards, buttons, or content too tightly.
+
+No Multi-color Buttons or Cards:
+
+Ask for single-color buttons with subtle hover effects.
+
+Say: "Each component should use a single color with slight shadow or border on hover."
