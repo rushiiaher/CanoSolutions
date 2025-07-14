@@ -29,6 +29,16 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    // Debug: Check if environment variable exists
+    if (!process.env.MONGODB_URI) {
+      console.error('MONGODB_URI not found in environment variables');
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ error: 'Database configuration missing' })
+      };
+    }
+
     const client = await connectToDatabase();
     const db = client.db('canosolutions');
 
@@ -78,11 +88,14 @@ exports.handler = async (event, context) => {
     };
 
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Detailed error:', error.message, error.stack);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Internal server error' })
+      body: JSON.stringify({ 
+        error: 'Internal server error',
+        details: error.message 
+      })
     };
   }
 };
