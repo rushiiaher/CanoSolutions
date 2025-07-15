@@ -8,7 +8,25 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Mail, Phone, Building, Calendar, Filter, Search, Users, MessageSquare } from "lucide-react"
-import { InquiryForm, EmailSubscription } from "@/lib/models"
+
+interface InquiryForm {
+  _id: string
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  company?: string
+  message: string
+  createdAt: string
+  status: string
+}
+
+interface EmailSubscription {
+  _id: string
+  email: string
+  subscribedAt: string
+  status: string
+}
 
 export default function AdminDashboard() {
   const [inquiries, setInquiries] = useState<InquiryForm[]>([])
@@ -55,7 +73,7 @@ export default function AdminDashboard() {
         inquiry.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         inquiry.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         inquiry.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        inquiry.company.toLowerCase().includes(searchTerm.toLowerCase())
+        (inquiry.company && inquiry.company.toLowerCase().includes(searchTerm.toLowerCase()))
       )
     }
 
@@ -104,7 +122,7 @@ export default function AdminDashboard() {
           <div className="flex justify-between items-center py-8">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">CanoSolutions Admin</h1>
-              <p className="text-gray-600 text-lg">Manage inquiries and subscriptions - Updated</p>
+              <p className="text-gray-600 text-lg">Manage inquiries and subscriptions</p>
             </div>
             <Button 
               onClick={fetchData} 
