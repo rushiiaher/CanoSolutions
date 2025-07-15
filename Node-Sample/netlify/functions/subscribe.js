@@ -81,6 +81,19 @@ exports.handler = async (event, context) => {
       };
     }
 
+    if (event.httpMethod === 'GET') {
+      const subscriptions = await db.collection('subscriptions')
+        .find({})
+        .sort({ subscribedAt: -1 })
+        .toArray();
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify(subscriptions)
+      };
+    }
+
     return {
       statusCode: 405,
       headers,

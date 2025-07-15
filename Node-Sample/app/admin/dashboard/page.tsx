@@ -28,23 +28,20 @@ export default function AdminDashboard() {
 
   const fetchData = async () => {
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
       const [inquiriesRes, subscriptionsRes] = await Promise.all([
-        fetch(`${apiUrl}/api/inquiry`),
-        fetch(`${apiUrl}/api/subscribe`)
+        fetch('/.netlify/functions/inquiry'),
+        fetch('/.netlify/functions/subscribe')
       ])
       
-      if (!inquiriesRes.ok || !subscriptionsRes.ok) {
-        throw new Error('Failed to fetch data from Express backend')
-      }
+      const inquiriesData = inquiriesRes.ok ? await inquiriesRes.json() : []
+      const subscriptionsData = subscriptionsRes.ok ? await subscriptionsRes.json() : []
       
-      const inquiriesData = await inquiriesRes.json()
-      const subscriptionsData = await subscriptionsRes.json()
-      
-      setInquiries(inquiriesData)
-      setSubscriptions(subscriptionsData)
+      setInquiries(Array.isArray(inquiriesData) ? inquiriesData : [])
+      setSubscriptions(Array.isArray(subscriptionsData) ? subscriptionsData : [])
     } catch (error) {
       console.error('Error fetching data:', error)
+      setInquiries([])
+      setSubscriptions([])
     } finally {
       setLoading(false)
     }
@@ -90,26 +87,29 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#DF2E35] mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading dashboard...</p>
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-gray-200 border-t-[#DF2E35] mx-auto"></div>
+          <p className="mt-6 text-lg text-gray-600 font-medium">Loading CanoSolutions Dashboard...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-white shadow-lg border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
+          <div className="flex justify-between items-center py-8">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">CanoSolutions Admin</h1>
-              <p className="text-gray-600">Manage inquiries and subscriptions</p>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">CanoSolutions Admin</h1>
+              <p className="text-gray-600 text-lg">Manage inquiries and subscriptions</p>
             </div>
-            <Button onClick={fetchData} variant="outline">
+            <Button 
+              onClick={fetchData} 
+              className="bg-[#DF2E35] hover:bg-[#DF2E35]/90 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+            >
               Refresh Data
             </Button>
           </div>
@@ -119,25 +119,29 @@ export default function AdminDashboard() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card>
+          <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-white to-gray-50">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <MessageSquare className="h-8 w-8 text-[#DF2E35]" />
+                <div className="w-12 h-12 bg-[#DF2E35]/10 rounded-xl flex items-center justify-center">
+                  <MessageSquare className="h-6 w-6 text-[#DF2E35]" />
+                </div>
                 <div className="ml-4">
                   <p className="text-sm font-medium text-gray-600">Total Inquiries</p>
-                  <p className="text-2xl font-bold text-gray-900">{inquiries.length}</p>
+                  <p className="text-3xl font-bold text-gray-900">{inquiries.length}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
           
-          <Card>
+          <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-white to-blue-50">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Users className="h-8 w-8 text-blue-600" />
+                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                  <Users className="h-6 w-6 text-blue-600" />
+                </div>
                 <div className="ml-4">
                   <p className="text-sm font-medium text-gray-600">New Inquiries</p>
-                  <p className="text-2xl font-bold text-gray-900">
+                  <p className="text-3xl font-bold text-gray-900">
                     {inquiries.filter(i => i.status === 'new').length}
                   </p>
                 </div>
@@ -145,25 +149,29 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
           
-          <Card>
+          <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-white to-green-50">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Mail className="h-8 w-8 text-green-600" />
+                <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                  <Mail className="h-6 w-6 text-green-600" />
+                </div>
                 <div className="ml-4">
                   <p className="text-sm font-medium text-gray-600">Email Subscribers</p>
-                  <p className="text-2xl font-bold text-gray-900">{subscriptions.length}</p>
+                  <p className="text-3xl font-bold text-gray-900">{subscriptions.length}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
           
-          <Card>
+          <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-white to-purple-50">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Calendar className="h-8 w-8 text-purple-600" />
+                <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                  <Calendar className="h-6 w-6 text-purple-600" />
+                </div>
                 <div className="ml-4">
                   <p className="text-sm font-medium text-gray-600">This Month</p>
-                  <p className="text-2xl font-bold text-gray-900">
+                  <p className="text-3xl font-bold text-gray-900">
                     {inquiries.filter(i => 
                       new Date(i.createdAt).getMonth() === new Date().getMonth()
                     ).length}
