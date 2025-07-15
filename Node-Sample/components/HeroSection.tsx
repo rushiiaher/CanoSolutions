@@ -34,8 +34,7 @@ export default function HeroSection() {
                   Transform Your Business with <span className="text-gradient">AI-Powered Solutions</span>
                 </h1>
                 <p className="text-base sm:text-lg text-Black/90 leading-relaxed">
-                  Partner with India's most innovative IT startup. We deliver cutting-edge AI, IoT, and Cloud
-                  solutions trusted by government organizations and enterprises across India.
+                  Partner with India’s most innovative IT startup. We deliver cutting-edge AI, IoT, Cloud, and Data-Driven Solutions, trusted by government organizations and enterprises across India. Our expertise includes User-Friendly Websites & Mobile Apps, Custom LMS (Learning Management Systems), CRM Solutions, ERP Platforms, and end-to-end Digital Transformation Services tailored to your needs.
                 </p>
               </div>
 

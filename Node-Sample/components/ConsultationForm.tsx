@@ -131,22 +131,20 @@ export default function ConsultationForm({
         value={formData.company}
         onChange={handleInputChange}
       />
-      {variant !== 'hero' && (
-        <Select value={formData.service} onValueChange={handleSelectChange}>
-          <SelectTrigger>
-            <SelectValue placeholder="Service Interest" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="ai">AI & Machine Learning</SelectItem>
-            <SelectItem value="iot">LMS/IoT Solutions</SelectItem>
-            <SelectItem value="cloud">Cloud Infrastructure</SelectItem>
-            <SelectItem value="digital-marketing">Digital Marketing</SelectItem>
-            <SelectItem value="web">Web Development</SelectItem>
-            <SelectItem value="android">Android Development</SelectItem>
-            <SelectItem value="consultation">General Consultation</SelectItem>
-          </SelectContent>
-        </Select>
-      )}
+      <Select value={formData.service} onValueChange={handleSelectChange}>
+        <SelectTrigger className={variant === 'hero' ? "bg-white" : ""}>
+          <SelectValue placeholder="Service Interest" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="ai">AI & Machine Learning</SelectItem>
+          <SelectItem value="iot">LMS/IoT Solutions</SelectItem>
+          <SelectItem value="cloud">Cloud Infrastructure</SelectItem>
+          <SelectItem value="digital-marketing">Digital Marketing</SelectItem>
+          <SelectItem value="web">Web Development</SelectItem>
+          <SelectItem value="android">Android Development</SelectItem>
+          <SelectItem value="consultation">General Consultation</SelectItem>
+        </SelectContent>
+      </Select>
       <Textarea 
         name="message"
         placeholder="Tell us about your project requirements..." 

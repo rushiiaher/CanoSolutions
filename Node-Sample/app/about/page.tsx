@@ -85,19 +85,19 @@ export default function AboutPage() {
 
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <div className="text-3xl font-bold text-primary">50+</div>
+                  <div className="text-3xl font-bold text-primary">100+</div>
                   <div className="text-textSecondary">Projects Delivered</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-primary">25+</div>
+                  <div className="text-3xl font-bold text-primary">100+</div>
                   <div className="text-textSecondary">Happy Clients</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-primary">15+</div>
+                  <div className="text-3xl font-bold text-primary">50+</div>
                   <div className="text-textSecondary">Team Members</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-primary">100%</div>
+                  <div className="text-3xl font-bold text-primary">99%</div>
                   <div className="text-textSecondary">Client Satisfaction</div>
                 </div>
               </div>
