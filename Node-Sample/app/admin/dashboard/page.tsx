@@ -104,7 +104,7 @@ export default function AdminDashboard() {
           <div className="flex justify-between items-center py-8">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">CanoSolutions Admin</h1>
-              <p className="text-gray-600 text-lg">Manage inquiries and subscriptions</p>
+              <p className="text-gray-600 text-lg">Manage inquiries and subscriptions - Updated</p>
             </div>
             <Button 
               onClick={fetchData} 
