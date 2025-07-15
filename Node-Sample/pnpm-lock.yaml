@@ -122,6 +122,9 @@ importers:
       mongodb:
         specifier: ^6.17.0
         version: 6.17.0
+      mongodb-connection-string-url:
+        specifier: ^3.0.0
+        version: 3.0.2
       next:
         specifier: 15.2.4
         version: 15.2.4(@babel/core@7.28.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
