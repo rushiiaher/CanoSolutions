@@ -12,10 +12,10 @@ async function connectToDatabase() {
   }
 
   const client = new MongoClient(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    directConnection: true
+    serverSelectionTimeoutMS: 5000,
+    connectTimeoutMS: 10000,
   });
+  
   await client.connect();
   cachedClient = client;
   return client;
@@ -95,7 +95,10 @@ exports.handler = async (event, context) => {
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Internal server error' })
+      body: JSON.stringify({ 
+        error: 'Internal server error',
+        details: error.message 
+      })
     };
   }
 };

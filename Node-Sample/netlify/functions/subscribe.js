@@ -12,10 +12,10 @@ async function connectToDatabase() {
   }
 
   const client = new MongoClient(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    directConnection: true
+    serverSelectionTimeoutMS: 5000,
+    connectTimeoutMS: 10000,
   });
+  
   await client.connect();
   cachedClient = client;
   return client;
@@ -33,16 +33,6 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    // Debug: Check if environment variable exists
-    if (!process.env.MONGODB_URI) {
-      console.error('MONGODB_URI not found in environment variables');
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ error: 'Database configuration missing' })
-      };
-    }
-
     const client = await connectToDatabase();
     const db = client.db('canosolutions');
 
@@ -105,7 +95,7 @@ exports.handler = async (event, context) => {
     };
 
   } catch (error) {
-    console.error('Detailed error:', error.message, error.stack);
+    console.error('Error:', error);
     return {
       statusCode: 500,
       headers,
