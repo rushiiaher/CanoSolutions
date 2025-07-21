@@ -2,6 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Helvetica Now Font */
+@font-face {
+  font-family: 'Helvetica Now';
+  src: url('/fonts/HelveticaNow-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica Now';
+  src: url('/fonts/HelveticaNow-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica Now';
+  src: url('/fonts/HelveticaNow-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -54,7 +79,7 @@
   
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-poppins);
+    font-family: 'Helvetica Now', sans-serif;
     line-height: 1.6;
   }
 
@@ -68,7 +93,7 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-inter);
+    font-family: 'Helvetica Now', sans-serif;
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.2;
@@ -179,4 +204,37 @@
 
 .link-hover:hover::after {
   width: 100%;
+}
+
+/* Logo scroll animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-250px * 4)); /* Adjust based on logo width */
+  }
+}
+
+.logo-scroll-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 15px 0;
+}
+
+.logo-scroll {
+  display: flex;
+  animation: scroll 20s linear infinite;
+}
+
+.logo-item {
+  flex-shrink: 0;
+  width: 200px;
+  margin: 0 25px;
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+  display: flex;
 }

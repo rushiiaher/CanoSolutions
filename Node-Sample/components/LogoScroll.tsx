@@ -1,75 +1,50 @@
 "use client"
 
-import { useEffect, useRef } from "react"
 import Image from "next/image"
 
 interface LogoScrollProps {
   className?: string
+  variant?: "corporate" | "government"
 }
 
-export default function LogoScroll({ className = "" }: LogoScrollProps) {
-  const scrollRef = useRef<HTMLDivElement>(null)
-  
-  // List of logos to display
-  const logos = [
-    { src: "/canosolutions_logo.jpeg", alt: "CanoSolutions" },
-    { src: "/GOVLOGO.png", alt: "Government of Maharashtra" },
+export default function LogoScroll({ className = "", variant = "government" }: LogoScrollProps) {
+  // Combined list of all logos
+  const allLogos = [
     { src: "/GOV-LOGO/GOV_OF_INDIA.png", alt: "Government of India" },
+    { src: "/GOV-LOGO/GOV_OF_MAHA.png", alt: "Government of Maharashtra" },
     { src: "/GOV-LOGO/GOV_OF_BIHAR.png", alt: "Government of Bihar" },
     { src: "/GOV-LOGO/GOV_OF_J&K.png", alt: "Government of J&K" },
-    { src: "/placeholder-logo.png", alt: "Partner" },
+    { src: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png", alt: "Google" },
+    { src: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Accenture.svg/2560px-Accenture.svg.png", alt: "Accenture" },
+    { src: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Deloitte.svg/2560px-Deloitte.svg.png", alt: "Deloitte" },
   ]
   
-  // Duplicate logos for seamless scrolling
-  const allLogos = [...logos, ...logos]
+  // Use all logos regardless of variant
+  const logos = allLogos
   
-  useEffect(() => {
-    const scrollContainer = scrollRef.current
-    if (!scrollContainer) return
-    
-    let animationId: number
-    let scrollPosition = 0
-    
-    const scroll = () => {
-      if (!scrollContainer) return
-      
-      scrollPosition += 0.5
-      if (scrollPosition >= scrollContainer.scrollWidth / 2) {
-        scrollPosition = 0
-      }
-      
-      scrollContainer.scrollLeft = scrollPosition
-      animationId = requestAnimationFrame(scroll)
-    }
-    
-    animationId = requestAnimationFrame(scroll)
-    
-    return () => {
-      cancelAnimationFrame(animationId)
-    }
-  }, [])
+  // Create a double set of logos for seamless scrolling
+  const scrollLogos = [...logos, ...logos, ...logos, ...logos]
   
   return (
     <div className={`w-full overflow-hidden ${className}`}>
-      <div 
-        ref={scrollRef}
-        className="flex items-center space-x-12 py-4 overflow-hidden whitespace-nowrap"
-        style={{ scrollBehavior: "smooth" }}
-      >
-        {allLogos.map((logo, index) => (
-          <div key={index} className="flex-shrink-0">
-            <div className="bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-sm flex items-center justify-center h-16 w-36">
-              <Image
-                src={logo.src}
-                alt={logo.alt}
-                width={120}
-                height={50}
-                className="h-auto w-auto max-h-10 object-contain"
-                style={{ filter: 'grayscale(0.4) contrast(1.1)' }}
-              />
+      <div className="logo-scroll-container">
+        <div className="logo-scroll animate-scroll">
+          {scrollLogos.map((logo, index) => (
+            <div key={index} className="logo-item">
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-sm flex items-center justify-center h-16 w-36">
+                <Image
+                  src={logo.src}
+                  alt={logo.alt}
+                  width={120}
+                  height={50}
+                  className="h-auto w-auto max-h-10 object-contain"
+                  style={{ filter: 'grayscale(0.4) contrast(1.1)' }}
+                  unoptimized={logo.src.startsWith('http')} // For external images
+                />
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   )

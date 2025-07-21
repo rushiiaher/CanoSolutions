@@ -1,22 +1,10 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter, Poppins, JetBrains_Mono } from "next/font/google"
+import { JetBrains_Mono } from "next/font/google"
 import "./globals.css"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import WhatsAppWidget from "@/components/WhatsAppWidget"
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  weight: ["400", "600", "700"],
-})
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  variable: "--font-poppins",
-  weight: ["400", "500", "600"],
-})
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -39,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} font-poppins`}>
+      <body className={`${jetbrainsMono.variable} font-helvetica`}>
         <Header />
         <main>{children}</main>
         <Footer />
