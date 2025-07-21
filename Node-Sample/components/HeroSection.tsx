@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Award, ArrowRight, Phone, Mail } from "lucide-react"
 import ConsultationForm from "@/components/ConsultationForm"
+import LogoScroll from "@/components/LogoScroll"
 
 export default function HeroSection() {
   return (
@@ -23,11 +24,7 @@ export default function HeroSection() {
           {/* Left Content */}
           <div className="text-center lg:text-left">
             <div className="space-y-6 lg:space-y-8 fade-in-up">
-              <Badge variant="outline" className="border-success text-success px-3 py-2 text-xs sm:text-sm">
-                <Award className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-                <span className="hidden sm:inline">Ahilyadevi Holkar Startup Grant Winner - Govt. of Maharashtra</span>
-                <span className="sm:hidden">Govt. Grant Winner</span>
-              </Badge>
+              
 
               <div className="space-y-4">
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-inter font-bold text-Black leading-tight">
@@ -81,6 +78,12 @@ export default function HeroSection() {
                   <div className="text-xl sm:text-2xl font-bold text-primary">99%</div>
                   <div className="text-xs sm:text-sm text-black/80">Satisfaction</div>
                 </div>
+              </div>
+              
+              {/* Trusted By - Logo Scroll */}
+              <div className="mt-6 pt-4 border-t border-white/20">
+                <p className="text-sm text-black/80 mb-2 text-center lg:text-left">Trusted By:</p>
+                <LogoScroll className="bg-white/10 rounded-lg" />
               </div>
             </div>
           </div>
