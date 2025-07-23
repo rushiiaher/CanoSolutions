@@ -58,7 +58,7 @@ export default function ConsultationForm({
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || '/.netlify/functions'
       
       try {
-        const testResponse = await fetch(`${apiUrl}/hardcoded-mongo-test`)
+        const testResponse = await fetch(`${apiUrl}/no-mongo-test`)
         const testData = await testResponse.json()
         
         if (!testResponse.ok) {
@@ -74,8 +74,8 @@ export default function ConsultationForm({
         // Continue anyway
       }
       
-      // Submit the form using hardcoded inquiry function
-      const response = await fetch(`${apiUrl}/hardcoded-inquiry`, {
+      // Submit the form without using MongoDB
+      const response = await fetch(`${apiUrl}/no-mongo-inquiry`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

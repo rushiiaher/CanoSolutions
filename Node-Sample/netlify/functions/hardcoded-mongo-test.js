@@ -1,5 +1,6 @@
-// Hardcoded MongoDB connection test
-const { MongoClient } = require('mongodb');
+// Hardcoded MongoDB connection test with explicit options
+const mongodb = require('mongodb');
+const MongoClient = mongodb.MongoClient;
 
 exports.handler = async (event, context) => {
   const headers = {
@@ -13,8 +14,11 @@ exports.handler = async (event, context) => {
     
     console.log('Using hardcoded MongoDB URI');
     
-    // Create client
-    const client = new MongoClient(uri);
+    // Create client with explicit options
+    const client = new MongoClient(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
     
     // Connect
     console.log('Attempting to connect...');
@@ -46,7 +50,8 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({ 
         error: 'Connection failed',
         message: error.message,
-        type: error.name
+        type: error.name,
+        stack: error.stack
       })
     };
   }

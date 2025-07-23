@@ -1,6 +1,5 @@
-// Hardcoded MongoDB inquiry function
-const mongodb = require('mongodb');
-const MongoClient = mongodb.MongoClient;
+// MongoDB v6 inquiry function
+const { MongoClient, ServerApiVersion } = require('mongodb');
 
 exports.handler = async (event, context) => {
   const headers = {
@@ -51,17 +50,20 @@ exports.handler = async (event, context) => {
       };
     }
     
-    // Hardcoded MongoDB URI - same as in .env.local
+    // Hardcoded MongoDB URI
     const uri = "mongodb+srv://Cano:ChhxF5kcjmvXblVK@cluster0.ze01tlz.mongodb.net/canosolutions?retryWrites=true&w=majority";
     
-    // Connect to MongoDB
-    console.log('Connecting to MongoDB with hardcoded URI...');
+    // Create a MongoClient with the correct options for MongoDB v6
     const client = new MongoClient(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      }
     });
     
     try {
+      // Connect the client to the server
       await client.connect();
       console.log('Connected to MongoDB');
       
@@ -101,7 +103,8 @@ exports.handler = async (event, context) => {
         headers,
         body: JSON.stringify({ 
           error: 'Database operation failed', 
-          message: dbError.message 
+          message: dbError.message,
+          stack: dbError.stack
         })
       };
     } finally {
@@ -116,7 +119,8 @@ exports.handler = async (event, context) => {
       headers,
       body: JSON.stringify({ 
         error: 'Internal server error',
-        message: error.message
+        message: error.message,
+        stack: error.stack
       })
     };
   }
