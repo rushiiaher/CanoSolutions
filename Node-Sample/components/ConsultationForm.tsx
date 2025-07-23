@@ -58,7 +58,7 @@ export default function ConsultationForm({
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || '/.netlify/functions'
       
       try {
-        const testResponse = await fetch(`${apiUrl}/no-mongo-test`)
+        const testResponse = await fetch(`${apiUrl}/db-test`)
         const testData = await testResponse.json()
         
         if (!testResponse.ok) {
@@ -71,11 +71,13 @@ export default function ConsultationForm({
         console.log('MongoDB test successful, proceeding with form submission')
       } catch (testError) {
         console.error('Error testing MongoDB:', testError)
-        // Continue anyway
+        setSubmitMessage(`Database connection error: Unable to reach test endpoint.`)
+        setIsSubmitting(false)
+        return
       }
       
-      // Submit the form without using MongoDB
-      const response = await fetch(`${apiUrl}/no-mongo-inquiry`, {
+      // Submit the form with MongoDB
+      const response = await fetch(`${apiUrl}/direct-inquiry`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
