@@ -10,12 +10,20 @@ async function connectToDatabase() {
   if (!process.env.MONGODB_URI) {
     throw new Error('MONGODB_URI environment variable is not set');
   }
-
-  console.log('Connecting to MongoDB with URI:', process.env.MONGODB_URI.substring(0, 20) + '...');
   
-  const client = new MongoClient(process.env.MONGODB_URI, {
+  // Ensure URI has the correct protocol prefix
+  let uri = process.env.MONGODB_URI;
+  if (!uri.startsWith('mongodb://') && !uri.startsWith('mongodb+srv://')) {
+    uri = 'mongodb+srv://' + uri;
+  }
+  
+  console.log('Connecting to MongoDB...');
+  
+  const client = new MongoClient(uri, {
     serverSelectionTimeoutMS: 5000,
     connectTimeoutMS: 10000,
+    useNewUrlParser: true,
+    useUnifiedTopology: true
   });
   
   try {
@@ -59,6 +67,9 @@ exports.handler = async (event, context) => {
         };
       }
       
+      // Log the received data for debugging
+      console.log('Received subscription data:', JSON.stringify(requestBody));
+      
       const { email } = requestBody;
 
       if (!email || !email.includes('@')) {
@@ -71,15 +82,44 @@ exports.handler = async (event, context) => {
       }
       
       console.log('Connecting to database...');
-      const client = await connectToDatabase();
+      let client;
+      try {
+        client = await connectToDatabase();
+        console.log('Database connection successful');
+      } catch (dbError) {
+        console.error('Database connection failed:', dbError);
+        return {
+          statusCode: 500,
+          headers,
+          body: JSON.stringify({ 
+            error: 'Database connection failed', 
+            details: dbError.message 
+          })
+        };
+      }
+      
       const db = client.db('canosolutions');
 
-      const existing = await db.collection('subscriptions').findOne({ email });
-      if (existing) {
+      let existing;
+      try {
+        existing = await db.collection('subscriptions').findOne({ email });
+        if (existing) {
+          console.log('Email already subscribed:', email);
+          return {
+            statusCode: 400,
+            headers,
+            body: JSON.stringify({ error: 'Email already subscribed' })
+          };
+        }
+      } catch (findError) {
+        console.error('Error checking existing subscription:', findError);
         return {
-          statusCode: 400,
+          statusCode: 500,
           headers,
-          body: JSON.stringify({ error: 'Email already subscribed' })
+          body: JSON.stringify({ 
+            error: 'Failed to check subscription status', 
+            details: findError.message 
+          })
         };
       }
 
@@ -89,17 +129,32 @@ exports.handler = async (event, context) => {
         status: 'active'
       };
 
-      const result = await db.collection('subscriptions').insertOne(subscription);
-
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({
-          success: true,
-          message: 'Successfully subscribed to newsletter',
-          id: result.insertedId
-        })
-      };
+      console.log('Saving subscription to database...');
+      let result;
+      try {
+        result = await db.collection('subscriptions').insertOne(subscription);
+        console.log('Subscription saved successfully with ID:', result.insertedId);
+        
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({
+            success: true,
+            message: 'Successfully subscribed to newsletter',
+            id: result.insertedId
+          })
+        };
+      } catch (insertError) {
+        console.error('Error saving subscription:', insertError);
+        return {
+          statusCode: 500,
+          headers,
+          body: JSON.stringify({ 
+            error: 'Failed to save subscription', 
+            details: insertError.message 
+          })
+        };
+      }
     }
 
     if (event.httpMethod === 'GET') {

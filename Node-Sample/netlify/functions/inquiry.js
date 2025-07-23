@@ -10,12 +10,20 @@ async function connectToDatabase() {
   if (!process.env.MONGODB_URI) {
     throw new Error('MONGODB_URI environment variable is not set');
   }
-
-  console.log('Connecting to MongoDB with URI:', process.env.MONGODB_URI.substring(0, 20) + '...');
   
-  const client = new MongoClient(process.env.MONGODB_URI, {
+  // Ensure URI has the correct protocol prefix
+  let uri = process.env.MONGODB_URI;
+  if (!uri.startsWith('mongodb://') && !uri.startsWith('mongodb+srv://')) {
+    uri = 'mongodb+srv://' + uri;
+  }
+  
+  console.log('Connecting to MongoDB...');
+  
+  const client = new MongoClient(uri, {
     serverSelectionTimeoutMS: 5000,
     connectTimeoutMS: 10000,
+    useNewUrlParser: true,
+    useUnifiedTopology: true
   });
   
   try {
@@ -59,9 +67,12 @@ exports.handler = async (event, context) => {
         };
       }
       
+      // Log the received data for debugging
+      console.log('Received form data:', JSON.stringify(requestBody));
+      
       const { firstName, lastName, email, phone, company, message } = requestBody;
 
-      if (!firstName || !lastName || !email || !phone || !message) {
+      if (!firstName || !lastName || !email || !phone) {
         console.log('Validation failed: Missing required fields');
         return {
           statusCode: 400,
@@ -70,8 +81,26 @@ exports.handler = async (event, context) => {
         };
       }
       
+      // If message is undefined, set it to an empty string
+      const formMessage = message || '';
+      
       console.log('Connecting to database...');
-      const client = await connectToDatabase();
+      let client;
+      try {
+        client = await connectToDatabase();
+        console.log('Database connection successful');
+      } catch (dbError) {
+        console.error('Database connection failed:', dbError);
+        return {
+          statusCode: 500,
+          headers,
+          body: JSON.stringify({ 
+            error: 'Database connection failed', 
+            details: dbError.message 
+          })
+        };
+      }
+      
       const db = client.db('canosolutions');
 
       const inquiry = {
@@ -80,22 +109,37 @@ exports.handler = async (event, context) => {
         email,
         phone,
         company: company || '',
-        message,
+        message: formMessage,
         createdAt: new Date(),
         status: 'new'
       };
 
-      const result = await db.collection('inquiries').insertOne(inquiry);
-
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({
-          success: true,
-          message: 'Inquiry submitted successfully',
-          id: result.insertedId
-        })
-      };
+      console.log('Saving inquiry to database...');
+      let result;
+      try {
+        result = await db.collection('inquiries').insertOne(inquiry);
+        console.log('Inquiry saved successfully with ID:', result.insertedId);
+        
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({
+            success: true,
+            message: 'Inquiry submitted successfully',
+            id: result.insertedId
+          })
+        };
+      } catch (insertError) {
+        console.error('Error saving inquiry:', insertError);
+        return {
+          statusCode: 500,
+          headers,
+          body: JSON.stringify({ 
+            error: 'Failed to save inquiry', 
+            details: insertError.message 
+          })
+        };
+      }
     }
 
     if (event.httpMethod === 'GET') {

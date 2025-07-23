@@ -10,12 +10,20 @@ async function connectToDatabase() {
   if (!process.env.MONGODB_URI) {
     throw new Error('MONGODB_URI environment variable is not set');
   }
-
-  console.log('Connecting to MongoDB with URI:', process.env.MONGODB_URI.substring(0, 20) + '...');
   
-  const client = new MongoClient(process.env.MONGODB_URI, {
+  // Ensure URI has the correct protocol prefix
+  let uri = process.env.MONGODB_URI;
+  if (!uri.startsWith('mongodb://') && !uri.startsWith('mongodb+srv://')) {
+    uri = 'mongodb+srv://' + uri;
+  }
+  
+  console.log('Connecting to MongoDB...');
+  
+  const client = new MongoClient(uri, {
     serverSelectionTimeoutMS: 5000,
     connectTimeoutMS: 10000,
+    useNewUrlParser: true,
+    useUnifiedTopology: true
   });
   
   try {
