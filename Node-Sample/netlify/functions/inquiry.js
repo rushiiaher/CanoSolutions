@@ -3,8 +3,17 @@ const { MongoClient } = require('mongodb');
 let cachedClient = null;
 
 async function connectToDatabase() {
+  // Check if we have a cached client and if it's still connected
   if (cachedClient) {
-    return cachedClient;
+    try {
+      // Test the connection with a simple ping
+      await cachedClient.db('admin').command({ ping: 1 });
+      console.log('Using cached MongoDB connection');
+      return cachedClient;
+    } catch (error) {
+      console.log('Cached connection is stale, creating new connection');
+      cachedClient = null;
+    }
   }
 
   if (!process.env.MONGODB_URI) {
@@ -17,12 +26,16 @@ async function connectToDatabase() {
     uri = 'mongodb+srv://' + uri;
   }
   
-  console.log('Connecting to MongoDB...');
+  console.log('Creating new MongoDB connection...');
   
-  // Remove deprecated options that might cause issues
+  // Optimized options for serverless environments
   const client = new MongoClient(uri, {
     serverSelectionTimeoutMS: 5000,
-    connectTimeoutMS: 10000
+    connectTimeoutMS: 10000,
+    maxPoolSize: 1, // Limit connection pool for serverless
+    minPoolSize: 0,
+    maxIdleTimeMS: 30000, // Close connections after 30 seconds of inactivity
+    bufferMaxEntries: 0 // Disable mongoose buffering
   });
   
   try {
@@ -71,12 +84,33 @@ exports.handler = async (event, context) => {
       
       const { firstName, lastName, email, phone, company, message } = requestBody;
 
-      if (!firstName || !lastName || !email || !phone) {
-        console.log('Validation failed: Missing required fields');
+      // Enhanced validation
+      const validationErrors = [];
+      
+      if (!firstName || firstName.trim().length === 0) {
+        validationErrors.push('First name is required');
+      }
+      if (!lastName || lastName.trim().length === 0) {
+        validationErrors.push('Last name is required');
+      }
+      if (!email || email.trim().length === 0) {
+        validationErrors.push('Email is required');
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+        validationErrors.push('Please enter a valid email address');
+      }
+      if (!phone || phone.trim().length === 0) {
+        validationErrors.push('Phone number is required');
+      }
+      
+      if (validationErrors.length > 0) {
+        console.log('Validation failed:', validationErrors);
         return {
           statusCode: 400,
           headers,
-          body: JSON.stringify({ error: 'All required fields must be filled' })
+          body: JSON.stringify({ 
+            error: 'Validation failed', 
+            details: validationErrors 
+          })
         };
       }
       
@@ -142,16 +176,49 @@ exports.handler = async (event, context) => {
     }
 
     if (event.httpMethod === 'GET') {
-      const inquiries = await db.collection('inquiries')
-        .find({})
-        .sort({ createdAt: -1 })
-        .toArray();
+      console.log('Processing GET request for inquiries');
+      
+      let client;
+      try {
+        client = await connectToDatabase();
+        console.log('Database connection successful for GET request');
+      } catch (dbError) {
+        console.error('Database connection failed for GET request:', dbError);
+        return {
+          statusCode: 500,
+          headers,
+          body: JSON.stringify({ 
+            error: 'Database connection failed', 
+            details: dbError.message 
+          })
+        };
+      }
+      
+      const db = client.db('canosolutions');
+      
+      try {
+        const inquiries = await db.collection('inquiries')
+          .find({})
+          .sort({ createdAt: -1 })
+          .toArray();
 
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify(inquiries)
-      };
+        console.log(`Retrieved ${inquiries.length} inquiries`);
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify(inquiries)
+        };
+      } catch (queryError) {
+        console.error('Error querying inquiries:', queryError);
+        return {
+          statusCode: 500,
+          headers,
+          body: JSON.stringify({ 
+            error: 'Failed to retrieve inquiries', 
+            details: queryError.message 
+          })
+        };
+      }
     }
 
     return {
