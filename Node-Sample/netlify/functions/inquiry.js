@@ -27,6 +27,7 @@ async function connectToDatabase() {
   }
   
   console.log('Creating new MongoDB connection...');
+  console.log('MongoDB URI format check:', uri.substring(0, 20) + '...');
   
   // Optimized options for serverless environments
   const client = new MongoClient(uri, {
@@ -45,7 +46,8 @@ async function connectToDatabase() {
     return client;
   } catch (error) {
     console.error('MongoDB connection error:', error.message);
-    throw error;
+    // Don't throw the error, return null instead
+    return null;
   }
 }
 
@@ -118,22 +120,21 @@ exports.handler = async (event, context) => {
       const formMessage = message || '';
       
       console.log('Connecting to database...');
-      let client;
-      try {
-        client = await connectToDatabase();
-        console.log('Database connection successful');
-      } catch (dbError) {
-        console.error('Database connection failed:', dbError);
+      const client = await connectToDatabase();
+      
+      if (!client) {
+        console.error('Database connection failed');
         return {
           statusCode: 500,
           headers,
           body: JSON.stringify({ 
             error: 'Database connection failed', 
-            details: dbError.message 
+            details: 'Could not establish connection to MongoDB' 
           })
         };
       }
       
+      console.log('Database connection successful');
       const db = client.db('canosolutions');
 
       const inquiry = {
@@ -178,22 +179,21 @@ exports.handler = async (event, context) => {
     if (event.httpMethod === 'GET') {
       console.log('Processing GET request for inquiries');
       
-      let client;
-      try {
-        client = await connectToDatabase();
-        console.log('Database connection successful for GET request');
-      } catch (dbError) {
-        console.error('Database connection failed for GET request:', dbError);
+      const client = await connectToDatabase();
+      
+      if (!client) {
+        console.error('Database connection failed for GET request');
         return {
           statusCode: 500,
           headers,
           body: JSON.stringify({ 
             error: 'Database connection failed', 
-            details: dbError.message 
+            details: 'Could not establish connection to MongoDB' 
           })
         };
       }
       
+      console.log('Database connection successful for GET request');
       const db = client.db('canosolutions');
       
       try {
