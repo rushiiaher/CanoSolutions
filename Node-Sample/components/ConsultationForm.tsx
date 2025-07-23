@@ -53,7 +53,9 @@ export default function ConsultationForm({
     setSubmitMessage('')
 
     try {
-      const response = await fetch('/.netlify/functions/inquiry', {
+      console.log('Submitting form to /.netlify/functions/inquiry')
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '/.netlify/functions'
+      const response = await fetch(`${apiUrl}/inquiry`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,7 +66,11 @@ export default function ConsultationForm({
         }),
       })
 
+      const data = await response.json()
+      console.log('Response status:', response.status)
+      
       if (response.ok) {
+        console.log('Form submitted successfully')
         setSubmitMessage('Thank you! Your inquiry has been submitted successfully.')
         setFormData({
           firstName: '',
@@ -76,10 +82,11 @@ export default function ConsultationForm({
           message: ''
         })
       } else {
-        const error = await response.json()
-        setSubmitMessage(error.error || 'Failed to submit inquiry')
+        console.error('Form submission error:', data)
+        setSubmitMessage(data.error || data.details || 'Failed to submit inquiry')
       }
     } catch (error) {
+      console.error('Form submission network error:', error)
       setSubmitMessage('Network error. Please try again.')
     } finally {
       setIsSubmitting(false)

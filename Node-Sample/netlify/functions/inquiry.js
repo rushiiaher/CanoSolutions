@@ -11,14 +11,22 @@ async function connectToDatabase() {
     throw new Error('MONGODB_URI environment variable is not set');
   }
 
+  console.log('Connecting to MongoDB with URI:', process.env.MONGODB_URI.substring(0, 20) + '...');
+  
   const client = new MongoClient(process.env.MONGODB_URI, {
     serverSelectionTimeoutMS: 5000,
     connectTimeoutMS: 10000,
   });
   
-  await client.connect();
-  cachedClient = client;
-  return client;
+  try {
+    await client.connect();
+    console.log('Successfully connected to MongoDB');
+    cachedClient = client;
+    return client;
+  } catch (error) {
+    console.error('MongoDB connection error:', error.message);
+    throw error;
+  }
 }
 
 exports.handler = async (event, context) => {
@@ -33,19 +41,38 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const client = await connectToDatabase();
-    const db = client.db('canosolutions');
-
+    console.log('Received inquiry request:', event.httpMethod);
+    
     if (event.httpMethod === 'POST') {
-      const { firstName, lastName, email, phone, company, message } = JSON.parse(event.body);
+      console.log('Processing POST request');
+      let requestBody;
+      
+      try {
+        requestBody = JSON.parse(event.body);
+        console.log('Request body parsed successfully');
+      } catch (parseError) {
+        console.error('Error parsing request body:', parseError);
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({ error: 'Invalid request body format' })
+        };
+      }
+      
+      const { firstName, lastName, email, phone, company, message } = requestBody;
 
       if (!firstName || !lastName || !email || !phone || !message) {
+        console.log('Validation failed: Missing required fields');
         return {
           statusCode: 400,
           headers,
           body: JSON.stringify({ error: 'All required fields must be filled' })
         };
       }
+      
+      console.log('Connecting to database...');
+      const client = await connectToDatabase();
+      const db = client.db('canosolutions');
 
       const inquiry = {
         firstName,
@@ -91,13 +118,14 @@ exports.handler = async (event, context) => {
     };
 
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error in inquiry function:', error);
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({ 
         error: 'Internal server error',
-        details: error.message 
+        details: error.message,
+        stack: process.env.NODE_ENV !== 'production' ? error.stack : undefined
       })
     };
   }

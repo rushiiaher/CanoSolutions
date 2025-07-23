@@ -16,7 +16,9 @@ export default function NewsletterSubscription() {
     setMessage("")
 
     try {
-      const response = await fetch('/.netlify/functions/subscribe', {
+      console.log('Submitting newsletter subscription')
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '/.netlify/functions'
+      const response = await fetch(`${apiUrl}/subscribe`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,14 +27,18 @@ export default function NewsletterSubscription() {
       })
 
       const data = await response.json()
+      console.log('Response status:', response.status)
 
       if (response.ok) {
+        console.log('Newsletter subscription successful')
         setMessage("Successfully subscribed to our newsletter!")
         setEmail("")
       } else {
-        setMessage(data.error || "Failed to subscribe")
+        console.error('Newsletter subscription error:', data)
+        setMessage(data.error || data.details || "Failed to subscribe")
       }
     } catch (error) {
+      console.error('Newsletter subscription network error:', error)
       setMessage("Network error. Please try again.")
     } finally {
       setIsSubmitting(false)

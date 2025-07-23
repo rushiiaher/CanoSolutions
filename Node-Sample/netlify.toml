@@ -18,5 +18,12 @@
 # Client-side routing
 [[redirects]]
   from = "/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+  force = false
+  conditions = {Path = "/.netlify/functions/*"}
+
+[[redirects]]
+  from = "/*"
   to = "/index.html"
   status = 200
