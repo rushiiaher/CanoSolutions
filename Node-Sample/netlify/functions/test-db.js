@@ -38,9 +38,7 @@ exports.handler = async (event, context) => {
     // Try to connect with a timeout
     const client = new MongoClient(uri, {
       serverSelectionTimeoutMS: 5000,
-      connectTimeoutMS: 10000,
-      useNewUrlParser: true,
-      useUnifiedTopology: true
+      connectTimeoutMS: 10000
     });
     
     console.log('Attempting to connect to MongoDB...');

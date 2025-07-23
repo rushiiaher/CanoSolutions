@@ -19,11 +19,10 @@ async function connectToDatabase() {
   
   console.log('Connecting to MongoDB...');
   
+  // Remove deprecated options that might cause issues
   const client = new MongoClient(uri, {
     serverSelectionTimeoutMS: 5000,
-    connectTimeoutMS: 10000,
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+    connectTimeoutMS: 10000
   });
   
   try {
