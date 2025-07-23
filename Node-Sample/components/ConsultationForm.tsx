@@ -53,25 +53,29 @@ export default function ConsultationForm({
     setSubmitMessage('')
 
     try {
-      console.log('Submitting form to /.netlify/functions/inquiry')
+      // First test MongoDB connection
+      console.log('Testing MongoDB connection')
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || '/.netlify/functions'
       
-      // First check if the database connection is working
       try {
-        const testResponse = await fetch(`${apiUrl}/db-test`)
+        const testResponse = await fetch(`${apiUrl}/hardcoded-mongo-test`)
+        const testData = await testResponse.json()
+        
         if (!testResponse.ok) {
-          const testData = await testResponse.json()
-          console.error('Database connection test failed:', testData)
-          setSubmitMessage('Database connection issue. Please try again later or contact support.')
+          console.error('MongoDB test failed:', testData)
+          setSubmitMessage(`Database connection error: ${testData.message || 'Unknown error'}`)
           setIsSubmitting(false)
           return
         }
+        
+        console.log('MongoDB test successful, proceeding with form submission')
       } catch (testError) {
-        console.log('DB test error (continuing with form submission):', testError)
-        // Continue with form submission even if test fails
+        console.error('Error testing MongoDB:', testError)
+        // Continue anyway
       }
       
-      const response = await fetch(`${apiUrl}/inquiry`, {
+      // Submit the form using hardcoded inquiry function
+      const response = await fetch(`${apiUrl}/hardcoded-inquiry`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -111,9 +115,9 @@ export default function ConsultationForm({
         const errorMessage = data.details || data.error || 'Failed to submit inquiry'
         setSubmitMessage(`Error: ${errorMessage}`)
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Form submission network error:', error)
-      setSubmitMessage('Network error. Please try again or contact support.')
+      setSubmitMessage(`Network error: ${error.message || 'Unknown error'}`)
     } finally {
       setIsSubmitting(false)
     }

@@ -1,3 +1,4 @@
+// Extremely simple MongoDB connection test
 const { MongoClient } = require('mongodb');
 
 exports.handler = async (event, context) => {
@@ -7,7 +8,7 @@ exports.handler = async (event, context) => {
   };
 
   try {
-    // Check if MongoDB URI is set
+    // Check MongoDB URI
     if (!process.env.MONGODB_URI) {
       return {
         statusCode: 500,
@@ -16,33 +17,36 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Create a new client
-    const client = new MongoClient(process.env.MONGODB_URI);
+    // Log URI (safely)
+    const uri = process.env.MONGODB_URI;
+    console.log('URI prefix:', uri.substring(0, 10) + '...');
+
+    // Create client with no options
+    const client = new MongoClient(uri);
     
-    // Connect to MongoDB
+    // Connect
     await client.connect();
     
-    // Test with a simple ping
+    // Test connection
     await client.db('admin').command({ ping: 1 });
     
-    // Close the connection
+    // Close connection
     await client.close();
     
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ success: true, message: 'MongoDB connection successful' })
+      body: JSON.stringify({ success: true })
     };
   } catch (error) {
-    console.error('MongoDB test error:', error);
+    console.error('MongoDB error:', error);
     
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({ 
-        error: 'MongoDB connection failed', 
-        message: error.message,
-        stack: error.stack
+        error: 'Connection failed',
+        message: error.message
       })
     };
   }

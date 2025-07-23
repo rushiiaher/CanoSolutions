@@ -4,58 +4,32 @@ const { MongoClient } = require('mongodb');
 let cachedClient = null;
 
 /**
- * Connect to MongoDB with improved error handling
+ * Connect to MongoDB with simplified error handling
  * @returns {Promise<MongoClient|null>} MongoDB client or null if connection fails
  */
 async function connectToDatabase() {
   try {
-    // Check if we have a cached client and if it's still connected
-    if (cachedClient) {
-      try {
-        // Test the connection with a simple ping
-        await cachedClient.db('admin').command({ ping: 1 });
-        console.log('Using cached MongoDB connection');
-        return cachedClient;
-      } catch (error) {
-        console.log('Cached connection is stale, creating new connection');
-        cachedClient = null;
-      }
-    }
-
+    // Don't use cached client in serverless environment
+    cachedClient = null;
+    
     if (!process.env.MONGODB_URI) {
       console.error('MONGODB_URI environment variable is not set');
       return null;
     }
     
-    // Ensure URI has the correct protocol prefix and is trimmed
-    let uri = process.env.MONGODB_URI.trim();
-    if (!uri.startsWith('mongodb://') && !uri.startsWith('mongodb+srv://')) {
-      uri = 'mongodb+srv://' + uri;
-    }
+    // Get the URI directly
+    const uri = process.env.MONGODB_URI;
+    console.log('Connecting to MongoDB...');
     
-    console.log('Creating new MongoDB connection...');
-    console.log('MongoDB URI format check:', uri.substring(0, 20) + '...');
+    // Create client with minimal options
+    const client = new MongoClient(uri);
     
-    // Optimized options for serverless environments
-    const client = new MongoClient(uri, {
-      serverSelectionTimeoutMS: 5000,
-      connectTimeoutMS: 10000,
-      socketTimeoutMS: 30000,
-      maxPoolSize: 1, // Limit connection pool for serverless
-      minPoolSize: 0,
-      maxIdleTimeMS: 30000, // Close connections after 30 seconds of inactivity
-    });
-    
+    // Connect
     await client.connect();
     console.log('Successfully connected to MongoDB');
-    cachedClient = client;
     return client;
   } catch (error) {
     console.error('MongoDB connection error:', error.message);
-    console.error('Error type:', error.name);
-    console.error('Stack trace:', error.stack);
-    
-    // Don't throw the error, return null instead
     return null;
   }
 }

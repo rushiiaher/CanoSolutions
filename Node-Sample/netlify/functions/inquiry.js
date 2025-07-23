@@ -13,8 +13,7 @@ exports.handler = async (event, context) => {
 
   try {
     console.log('Received inquiry request:', event.httpMethod);
-    console.log('Function environment:', process.env.NODE_ENV || 'development');
-    console.log('MongoDB URI exists:', !!process.env.MONGODB_URI);
+    console.log('MongoDB URI:', process.env.MONGODB_URI ? 'Set' : 'Not set');
     
     if (event.httpMethod === 'POST') {
       console.log('Processing POST request');
@@ -22,9 +21,7 @@ exports.handler = async (event, context) => {
       
       try {
         requestBody = JSON.parse(event.body);
-        console.log('Request body parsed successfully');
       } catch (parseError) {
-        console.error('Error parsing request body:', parseError);
         return {
           statusCode: 400,
           headers,
@@ -32,144 +29,85 @@ exports.handler = async (event, context) => {
         };
       }
       
-      // Log the received data for debugging
-      console.log('Received form data:', JSON.stringify(requestBody));
-      
       const { firstName, lastName, email, phone, company, message } = requestBody;
-
-      // Enhanced validation
-      const validationErrors = [];
       
-      if (!firstName || firstName.trim().length === 0) {
-        validationErrors.push('First name is required');
-      }
-      if (!lastName || lastName.trim().length === 0) {
-        validationErrors.push('Last name is required');
-      }
-      if (!email || email.trim().length === 0) {
-        validationErrors.push('Email is required');
-      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-        validationErrors.push('Please enter a valid email address');
-      }
-      if (!phone || phone.trim().length === 0) {
-        validationErrors.push('Phone number is required');
-      }
-      
-      if (validationErrors.length > 0) {
-        console.log('Validation failed:', validationErrors);
+      // Basic validation
+      if (!firstName || !lastName || !email || !phone) {
         return {
           statusCode: 400,
           headers,
-          body: JSON.stringify({ 
-            error: 'Validation failed', 
-            details: validationErrors 
-          })
+          body: JSON.stringify({ error: 'Missing required fields' })
         };
       }
       
-      // If message is undefined, set it to an empty string
-      const formMessage = message || '';
+      // Direct MongoDB connection
+      const { MongoClient } = require('mongodb');
       
-      console.log('Connecting to database...');
-      const client = await connectToDatabase();
-      
-      if (!client) {
-        console.error('Database connection failed');
+      if (!process.env.MONGODB_URI) {
         return {
           statusCode: 500,
           headers,
-          body: JSON.stringify({ 
-            error: 'Database connection failed', 
-            details: 'Could not establish connection to MongoDB' 
-          })
+          body: JSON.stringify({ error: 'MongoDB URI not configured' })
         };
       }
       
-      console.log('Database connection successful');
-      const db = client.db('canosolutions');
-
-      const inquiry = {
-        firstName,
-        lastName,
-        email,
-        phone,
-        company: company || '',
-        message: formMessage,
-        createdAt: new Date(),
-        status: 'new'
-      };
-
-      console.log('Saving inquiry to database...');
-      let result;
+      console.log('Connecting to MongoDB directly...');
+      const client = new MongoClient(process.env.MONGODB_URI);
+      
       try {
-        result = await db.collection('inquiries').insertOne(inquiry);
-        console.log('Inquiry saved successfully with ID:', result.insertedId);
+        await client.connect();
+        console.log('Connected to MongoDB');
+        
+        const db = client.db('canosolutions');
+        
+        const inquiry = {
+          firstName,
+          lastName,
+          email,
+          phone,
+          company: company || '',
+          message: message || '',
+          createdAt: new Date(),
+          status: 'new'
+        };
+        
+        const result = await db.collection('inquiries').insertOne(inquiry);
+        console.log('Inquiry saved with ID:', result.insertedId);
+        
+        await client.close();
         
         return {
           statusCode: 200,
           headers,
           body: JSON.stringify({
             success: true,
-            message: 'Inquiry submitted successfully',
-            id: result.insertedId
+            message: 'Inquiry submitted successfully'
           })
         };
-      } catch (insertError) {
-        console.error('Error saving inquiry:', insertError);
+      } catch (dbError) {
+        console.error('MongoDB error:', dbError);
         return {
           statusCode: 500,
           headers,
           body: JSON.stringify({ 
-            error: 'Failed to save inquiry', 
-            details: insertError.message 
+            error: 'Database operation failed', 
+            details: dbError.message 
           })
         };
+      } finally {
+        try {
+          await client.close();
+        } catch (e) {}
       }
     }
 
     if (event.httpMethod === 'GET') {
-      console.log('Processing GET request for inquiries');
-      
-      const client = await connectToDatabase();
-      
-      if (!client) {
-        console.error('Database connection failed for GET request');
-        return {
-          statusCode: 500,
-          headers,
-          body: JSON.stringify({ 
-            error: 'Database connection failed', 
-            details: 'Could not establish connection to MongoDB' 
-          })
-        };
-      }
-      
-      console.log('Database connection successful for GET request');
-      const db = client.db('canosolutions');
-      
-      try {
-        const inquiries = await db.collection('inquiries')
-          .find({})
-          .sort({ createdAt: -1 })
-          .toArray();
-
-        console.log(`Retrieved ${inquiries.length} inquiries`);
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify(inquiries)
-        };
-      } catch (queryError) {
-        console.error('Error querying inquiries:', queryError);
-        return {
-          statusCode: 500,
-          headers,
-          body: JSON.stringify({ 
-            error: 'Failed to retrieve inquiries', 
-            details: queryError.message 
-          })
-        };
-      }
+      // Simple GET handler
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ message: 'Use POST to submit inquiries' })
+      };
     }
 
     return {
@@ -180,21 +118,13 @@ exports.handler = async (event, context) => {
 
   } catch (error) {
     console.error('Error in inquiry function:', error);
-    console.error('Error details:', {
-      message: error.message,
-      name: error.name,
-      stack: error.stack
-    });
     
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({ 
         error: 'Internal server error',
-        details: error.message,
-        type: error.name,
-        // Always include stack trace for debugging
-        stack: error.stack
+        details: error.message
       })
     };
   }
