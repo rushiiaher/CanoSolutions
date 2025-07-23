@@ -1,49 +1,33 @@
 "use client"
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Mail, ArrowRight } from "lucide-react"
+"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Mail, ArrowRight } from "lucide-react";
+import { ApiService } from "@/lib/api-utils";
 
 export default function NewsletterSubscription() {
-  const [email, setEmail] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [message, setMessage] = useState("")
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setMessage("")
+    e.preventDefault();
+    setIsSubmitting(true);
+    setMessage("");
 
     try {
-      console.log('Submitting newsletter subscription')
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '/.netlify/functions'
-      const response = await fetch(`${apiUrl}/subscribe`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      })
-
-      const data = await response.json()
-      console.log('Response status:', response.status)
-
-      if (response.ok) {
-        console.log('Newsletter subscription successful')
-        setMessage("Successfully subscribed to our newsletter!")
-        setEmail("")
-      } else {
-        console.error('Newsletter subscription error:', data)
-        setMessage(data.error || data.details || "Failed to subscribe")
-      }
+      await ApiService.createSubscription(email);
+      setMessage("Successfully subscribed to our newsletter!");
+      setEmail("");
     } catch (error) {
-      console.error('Newsletter subscription network error:', error)
-      setMessage("Network error. Please try again.")
+      setMessage(error instanceof Error ? error.message : "Failed to subscribe");
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className="space-y-4">

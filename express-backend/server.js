@@ -9,8 +9,16 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(helmet());
+const allowedOrigins = (process.env.VITE_ORIGIN || 'http://localhost:3000,http://localhost:3001').split(',');
+
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 app.use(express.json());
