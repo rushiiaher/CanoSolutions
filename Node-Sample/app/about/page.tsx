@@ -73,7 +73,7 @@ export default function AboutPage() {
                 <Badge variant="outline" className="border-primary text-primary">
                   About CanoSolutions
                 </Badge>
-                <h1 className="text-h1 font-inter font-bold text-textPrimary">
+                <h1 className="text-h1  font-bold text-textPrimary">
                   Transforming Businesses Through <span className="text-gradient">Innovation</span>
                 </h1>
                 <p className="text-xl text-textSecondary leading-relaxed">
@@ -122,7 +122,7 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-2 gap-12">
             <Card className="border-0 shadow-lg">
               <CardContent className="p-8 space-y-6">
-                <h2 className="text-h3 font-inter font-bold text-textPrimary">Our Mission</h2>
+                <h2 className="text-h3  font-bold text-textPrimary">Our Mission</h2>
                 <p className="text-textSecondary leading-relaxed">
                   To democratize access to cutting-edge technology solutions by making AI, IoT, and Cloud computing
                   accessible to businesses of all sizes. We believe every organization deserves the opportunity to
@@ -133,7 +133,7 @@ export default function AboutPage() {
 
             <Card className="border-0 shadow-lg">
               <CardContent className="p-8 space-y-6">
-                <h2 className="text-h3 font-inter font-bold text-textPrimary">Our Vision</h2>
+                <h2 className="text-h3  font-bold text-textPrimary">Our Vision</h2>
                 <p className="text-textSecondary leading-relaxed">
                   To be globally recognized as the most trusted technology partner for digital transformation, known for
                   our innovation, reliability, and commitment to client success. We envision a future where technology
@@ -146,43 +146,13 @@ export default function AboutPage() {
       </section>
 
       {/* Company Timeline */}
-      <section className="section-padding bg-neutralCard">
-        <div className="container-max">
-          <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Our Journey</h2>
-            <p className="text-xl text-textSecondary max-w-4xl mx-auto">From startup to government-trusted partner in just two years</p>
-          </div>
-
-          <div className="space-y-8">
-            {milestones.map((milestone, index) => (
-              <div key={index} className="flex items-start space-x-6">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold">
-                    {milestone.year.slice(-2)}
-                  </div>
-                </div>
-                <Card className="flex-1 bg-white border-0 shadow-lg">
-                  <CardContent className="p-6">
-                    <div className="flex items-center space-x-3 mb-2">
-                      <h3 className="text-lg font-inter font-semibold text-textPrimary">{milestone.event}</h3>
-                      <Badge variant="outline" className="text-xs">
-                        {milestone.year}
-                      </Badge>
-                    </div>
-                    <p className="text-textSecondary">{milestone.description}</p>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      
 
       {/* Values */}
       <section className="section-padding">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Our Values</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Our Values</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">The principles that guide everything we do</p>
           </div>
 
@@ -195,7 +165,7 @@ export default function AboutPage() {
                     <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
                       <IconComponent className="w-8 h-8 text-primary" />
                     </div>
-                    <h3 className="text-xl font-inter font-semibold text-textPrimary">{value.title}</h3>
+                    <h3 className="text-xl  font-semibold text-textPrimary">{value.title}</h3>
                     <p className="text-textSecondary text-sm leading-relaxed">{value.description}</p>
                   </CardContent>
                 </Card>
@@ -210,7 +180,7 @@ export default function AboutPage() {
         <div className="container-max text-center">
           <div className="max-w-4xl mx-auto space-y-8">
             <div className="space-y-4">
-              <h2 className="text-h2 font-inter font-bold">Government Recognition</h2>
+              <h2 className="text-h2  font-bold">Government Recognition</h2>
               <p className="text-xl opacity-90">
                 We're proud to be recognized by Holkar Science City with a prestigious government grant for our
                 innovative approach to smart city solutions.

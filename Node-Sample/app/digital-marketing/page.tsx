@@ -111,7 +111,7 @@ export default function DigitalMarketingPage() {
               <Badge variant="outline" className="border-primary text-primary">
                 Digital Marketing
               </Badge>
-              <h1 className="text-h1 font-inter font-bold text-textPrimary">
+              <h1 className="text-h1  font-bold text-textPrimary">
                 Grow Your Business with <span className="text-gradient">Digital Marketing</span>
               </h1>
               <p className="text-xl text-textSecondary leading-relaxed max-w-3xl mx-auto">
@@ -152,7 +152,7 @@ export default function DigitalMarketingPage() {
       <section className="section-padding">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Digital Marketing Services</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Digital Marketing Services</h2>
             <p className="text-xl text-textSecondary max-w-3xl mx-auto">
               Comprehensive digital marketing solutions designed to maximize your online growth.
             </p>
@@ -169,7 +169,7 @@ export default function DigitalMarketingPage() {
                     </div>
 
                     <div className="space-y-3">
-                      <h3 className="text-xl font-inter font-semibold text-textPrimary">{service.title}</h3>
+                      <h3 className="text-xl  font-semibold text-textPrimary">{service.title}</h3>
                       <p className="text-textSecondary">{service.description}</p>
                     </div>
 
@@ -193,7 +193,7 @@ export default function DigitalMarketingPage() {
       <section className="section-padding bg-neutralCard">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Key Marketing Features</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Key Marketing Features</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Essential capabilities that drive marketing success and business growth
             </p>
@@ -208,7 +208,7 @@ export default function DigitalMarketingPage() {
                     <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
                       <IconComponent className="w-8 h-8 text-primary" />
                     </div>
-                    <h3 className="text-lg font-inter font-semibold text-textPrimary">{feature.title}</h3>
+                    <h3 className="text-lg  font-semibold text-textPrimary">{feature.title}</h3>
                     <p className="text-textSecondary text-sm">{feature.description}</p>
                   </CardContent>
                 </Card>
@@ -222,7 +222,7 @@ export default function DigitalMarketingPage() {
       <section className="section-padding">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Industry-Specific Marketing</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Industry-Specific Marketing</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Tailored digital marketing strategies delivering measurable results across various industries
             </p>
@@ -243,7 +243,7 @@ export default function DigitalMarketingPage() {
                     <Badge className="bg-primary/10 text-primary border-primary/20">
                       {industry.name}
                     </Badge>
-                    <h3 className="text-lg font-inter font-semibold text-textPrimary">{industry.title}</h3>
+                    <h3 className="text-lg  font-semibold text-textPrimary">{industry.title}</h3>
                     <p className="text-textSecondary text-sm">{industry.description}</p>
                     
                     <div className="space-y-2">
@@ -270,7 +270,7 @@ export default function DigitalMarketingPage() {
       <section className="section-padding bg-neutralCard">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Platform Expertise</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Platform Expertise</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Certified expertise across leading digital marketing platforms and advertising networks
             </p>
@@ -288,7 +288,7 @@ export default function DigitalMarketingPage() {
       <section className="section-padding">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Marketing Process</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Marketing Process</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Structured approach ensuring successful digital marketing campaigns with measurable results
             </p>
@@ -307,7 +307,7 @@ export default function DigitalMarketingPage() {
                   <div className="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto text-xl font-bold">
                     {phase.step}
                   </div>
-                  <h3 className="text-lg font-inter font-semibold text-textPrimary">{phase.title}</h3>
+                  <h3 className="text-lg  font-semibold text-textPrimary">{phase.title}</h3>
                   <p className="text-textSecondary text-sm">{phase.description}</p>
                 </CardContent>
               </Card>
@@ -320,7 +320,7 @@ export default function DigitalMarketingPage() {
       <section className="section-padding bg-primary text-white">
         <div className="container-max text-center">
           <div className="max-w-3xl mx-auto space-y-8">
-            <h2 className="text-h2 font-inter font-bold">Ready to Boost Your Online Presence?</h2>
+            <h2 className="text-h2  font-bold">Ready to Boost Your Online Presence?</h2>
             <p className="text-xl opacity-90">
               Get a free digital marketing audit and discover how our strategies can increase your 
               traffic, generate more leads, and grow your business online.

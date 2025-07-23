@@ -10,6 +10,7 @@ import TestimonialsSection from "@/components/TestimonialsSection"
 
 import FinalCTASection from "@/components/FinalCTASection"
 import TrustedBySection from "@/components/TrustedBySection"
+import FAQSectionSimple from "@/components/FAQSectionSimple"
 
 export default function HomePage() {
   const techStack = [
@@ -96,15 +97,18 @@ export default function HomePage() {
       <HeroSection />
 
       {/* Stats Section */}
-      <section className="py-8 sm:py-12 md:py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#DF2E35] mb-2">{stat.number}</div>
-                <div className="text-sm sm:text-base text-gray-600">{stat.label}</div>
-              </div>
-            ))}
+      <section className="py-10 sm:py-14 md:py-18 bg-neutralCard relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-neutralCard via-neutralCard/90 to-neutralCard opacity-80"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="bg-white rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.06)] p-8 md:p-10">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 md:gap-10">
+              {stats.map((stat, index) => (
+                <div key={index} className="text-center transform hover:-translate-y-1 transition-transform duration-300">
+                  <div className="text-2xl sm:text-3xl md:text-5xl font-bold text-[#DF2E35] mb-3">{stat.number}</div>
+                  <div className="text-sm sm:text-base text-textSecondary font-medium">{stat.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -132,19 +136,20 @@ export default function HomePage() {
               return (
                 <Card
                   key={index}
-                  className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white group"
+                  className="border-0 shadow-[0_10px_30px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] transition-all duration-300 bg-white group rounded-xl overflow-hidden"
                 >
-                  <CardHeader className="p-4 sm:p-6">
-                    <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#DF2E35]/10 flex items-center justify-center">
-                      <IconComponent className="w-6 h-6 text-[#DF2E35]" />
+                  <div className="h-1 bg-gradient-to-r from-[#DF2E35] to-[#DF2E35]/70"></div>
+                  <CardHeader className="p-6 sm:p-8">
+                    <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-[#DF2E35]/10 flex items-center justify-center shadow-[0_5px_15px_rgba(223,46,53,0.15)]">
+                      <IconComponent className="w-7 h-7 text-[#DF2E35]" />
                     </div>
                     <CardTitle className="text-xl sm:text-2xl text-gray-900 group-hover:text-[#DF2E35] transition-colors text-center">
                       {service.title}
                     </CardTitle>
-                    <CardDescription className="text-gray-600 text-sm sm:text-base text-center">{service.description}</CardDescription>
+                    <CardDescription className="text-gray-600 text-sm sm:text-base text-center mt-2">{service.description}</CardDescription>
                   </CardHeader>
-                  <CardContent className="p-4 sm:p-6 pt-0">
-                    <ul className="space-y-2 mb-6">
+                  <CardContent className="p-6 sm:p-8 pt-0">
+                    <ul className="space-y-3 mb-8">
                       {service.features.map((feature, idx) => (
                         <li key={idx} className="flex items-center text-gray-700 text-sm sm:text-base">
                           <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-[#DF2E35] mr-3 flex-shrink-0" />
@@ -152,13 +157,13 @@ export default function HomePage() {
                         </li>
                       ))}
                     </ul>
-                    <Link href={service.href}>
+                    <Link href={service.href} className="block transform hover:translate-y-[-2px] transition-transform duration-300">
                       <Button
                         variant="outline"
-                        className="w-full border-[#DF2E35] text-[#DF2E35] hover:bg-[#DF2E35] hover:text-white bg-transparent touch-target"
+                        className="w-full border-[#DF2E35] text-[#DF2E35] hover:bg-[#DF2E35] hover:text-white bg-transparent touch-target font-medium rounded-lg"
                       >
                         Learn More
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                       </Button>
                     </Link>
                   </CardContent>
@@ -181,7 +186,8 @@ export default function HomePage() {
       {/* Trusted By Section */}
       <TrustedBySection />
 
-
+      {/* FAQ Section */}
+      <FAQSectionSimple />
 
       {/* CTA Section */}
       <FinalCTASection />

@@ -39,7 +39,7 @@ export default function TeamSection() {
       <div className="container-max">
         {/* Section Header */}
         <div className="text-center space-y-4 mb-16">
-          <h2 className="text-h2 font-inter font-bold text-textPrimary">Meet the Innovators</h2>
+          <h2 className="text-h2  font-bold text-textPrimary">Meet the Innovators</h2>
           <p className="text-xl text-textSecondary max-w-3xl mx-auto">
             Our young, dynamic team combines deep technical expertise with fresh perspectives to deliver innovative
             solutions that drive real business transformation.
@@ -70,7 +70,7 @@ export default function TeamSection() {
                 {/* Content */}
                 <div className="p-4 sm:p-6 space-y-4">
                   <div>
-                    <h3 className="text-lg sm:text-xl font-inter font-semibold text-textPrimary">{member.name}</h3>
+                    <h3 className="text-lg sm:text-xl  font-semibold text-textPrimary">{member.name}</h3>
                     <p className="text-primary font-medium text-sm sm:text-base">{member.position}</p>
                   </div>
 
@@ -97,7 +97,7 @@ export default function TeamSection() {
         {/* Culture Section */}
         <div className="mt-16 bg-neutralCard rounded-card p-8">
           <div className="text-center space-y-6">
-            <h3 className="text-h3 font-inter font-bold text-textPrimary">Our Culture</h3>
+            <h3 className="text-h3  font-bold text-textPrimary">Our Culture</h3>
             <p className="text-textSecondary max-w-2xl mx-auto">
               We believe in fostering innovation through collaboration, continuous learning, and a passion for solving
               complex problems with elegant solutions.

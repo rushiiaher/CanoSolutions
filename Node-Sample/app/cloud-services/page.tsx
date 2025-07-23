@@ -111,7 +111,7 @@ export default function CloudServicesPage() {
               <Badge variant="outline" className="border-primary text-primary">
                 Cloud Services
               </Badge>
-              <h1 className="text-h1 font-inter font-bold text-textPrimary">
+              <h1 className="text-h1  font-bold text-textPrimary">
                 Scale Infinitely with <span className="text-gradient">Secure Cloud</span> Solutions
               </h1>
               <p className="text-xl text-textSecondary leading-relaxed max-w-3xl mx-auto">
@@ -152,7 +152,7 @@ export default function CloudServicesPage() {
       <section className="section-padding">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Our Cloud Services</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Our Cloud Services</h2>
             <p className="text-xl text-textSecondary max-w-3xl mx-auto">
               Comprehensive cloud solutions designed to accelerate your digital transformation journey.
             </p>
@@ -169,7 +169,7 @@ export default function CloudServicesPage() {
                     </div>
 
                     <div className="space-y-3">
-                      <h3 className="text-xl font-inter font-semibold text-textPrimary">{service.title}</h3>
+                      <h3 className="text-xl  font-semibold text-textPrimary">{service.title}</h3>
                       <p className="text-textSecondary">{service.description}</p>
                     </div>
 
@@ -193,7 +193,7 @@ export default function CloudServicesPage() {
       <section className="section-padding bg-neutralCard">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Why Choose Cloud?</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Why Choose Cloud?</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Key advantages of modern cloud infrastructure for your business
             </p>
@@ -208,7 +208,7 @@ export default function CloudServicesPage() {
                     <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
                       <IconComponent className="w-8 h-8 text-primary" />
                     </div>
-                    <h3 className="text-lg font-inter font-semibold text-textPrimary">{benefit.title}</h3>
+                    <h3 className="text-lg  font-semibold text-textPrimary">{benefit.title}</h3>
                     <p className="text-textSecondary text-sm">{benefit.description}</p>
                   </CardContent>
                 </Card>
@@ -222,7 +222,7 @@ export default function CloudServicesPage() {
       <section className="section-padding">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Multi-Cloud Expertise</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Multi-Cloud Expertise</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Certified expertise across leading cloud platforms for optimal solutions
             </p>
@@ -243,7 +243,7 @@ export default function CloudServicesPage() {
                     <Badge className="bg-primary/10 text-primary border-primary/20">
                       {platform.name}
                     </Badge>
-                    <h3 className="text-lg font-inter font-semibold text-textPrimary">{platform.title}</h3>
+                    <h3 className="text-lg  font-semibold text-textPrimary">{platform.title}</h3>
                     <p className="text-textSecondary text-sm">{platform.description}</p>
                     
                     <div className="space-y-2">
@@ -270,7 +270,7 @@ export default function CloudServicesPage() {
       <section className="section-padding bg-neutralCard">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Cloud Technology Stack</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Cloud Technology Stack</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Modern cloud technologies and DevOps tools for robust, scalable infrastructure
             </p>
@@ -288,7 +288,7 @@ export default function CloudServicesPage() {
       <section className="section-padding">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Cloud Migration Process</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Cloud Migration Process</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Proven methodology for seamless cloud transformation with minimal disruption
             </p>
@@ -307,7 +307,7 @@ export default function CloudServicesPage() {
                   <div className="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto text-xl font-bold">
                     {phase.step}
                   </div>
-                  <h3 className="text-lg font-inter font-semibold text-textPrimary">{phase.title}</h3>
+                  <h3 className="text-lg  font-semibold text-textPrimary">{phase.title}</h3>
                   <p className="text-textSecondary text-sm">{phase.description}</p>
                 </CardContent>
               </Card>
@@ -320,7 +320,7 @@ export default function CloudServicesPage() {
       <section className="section-padding bg-primary text-white">
         <div className="container-max text-center">
           <div className="max-w-3xl mx-auto space-y-8">
-            <h2 className="text-h2 font-inter font-bold">Ready to Move to the Cloud?</h2>
+            <h2 className="text-h2  font-bold">Ready to Move to the Cloud?</h2>
             <p className="text-xl opacity-90">
               Get a free cloud readiness assessment and discover how cloud transformation can 
               accelerate your business growth and reduce operational costs.

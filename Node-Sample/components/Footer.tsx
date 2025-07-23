@@ -1,30 +1,34 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Linkedin, Twitter, Github, Mail, Phone, MapPin } from "lucide-react"
-import NewsletterSubscription from "@/components/NewsletterSubscription"
+import { Input } from "@/components/ui/input"
+import { Linkedin, Twitter, Github, Mail, Phone, MapPin, ArrowRight } from "lucide-react"
 
 export default function Footer() {
   return (
-    <footer className="bg-textPrimary text-white">
-      <div className="container-max">
+    <footer className="bg-gradient-to-b from-textPrimary to-textPrimary/95 text-white relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-5"></div>
+      
+      <div className="container-max relative z-10">
         {/* Main Footer */}
         <div className="section-padding border-b border-white/10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
             {/* Company Info */}
             <div className="space-y-6">
               <div>
-                <div className="flex items-center space-x-3 mb-4">
-                  <Image
-                    src="/canosolutions_logo.jpeg"
-                    alt="CanoSolutions Logo"
-                    width={40}
-                    height={40}
-                    className="rounded-lg"
-                  />
+                <div className="flex items-center space-x-4 mb-5">
+                  <div className="p-1 bg-white/10 rounded-xl shadow-inner">
+                    <Image
+                      src="/canosolutions_logo.jpg"
+                      alt="CanoSolutions Logo"
+                      width={60}
+                      height={60}
+                      className="rounded-lg"
+                    />
+                  </div>
                   <div>
-                    <div className="font-inter font-bold text-lg">CanoSolutions</div>
-                    <div className="text-xs text-white/70">Think. Innovate. Create.</div>
+                    <div className="font-bold text-xs tracking-tight">CanoSolutions</div>
+                    <div className="text-10px text-white/70 font-medium">Think. Innovate. Create.</div>
                   </div>
                 </div>
                 <p className="text-white/80 text-sm leading-relaxed">
@@ -38,21 +42,21 @@ export default function Footer() {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="rounded-full border-white/20 hover:bg-white/10 bg-transparent"
+                  className="rounded-full border-white/20 hover:bg-white/10 hover:border-primary/50 bg-transparent hover:shadow-[0_0_15px_rgba(223,46,53,0.2)] transition-all duration-300"
                 >
                   <Linkedin className="w-4 h-4" />
                 </Button>
                 <Button
                   variant="outline"
                   size="icon"
-                  className="rounded-full border-white/20 hover:bg-white/10 bg-transparent"
+                  className="rounded-full border-white/20 hover:bg-white/10 hover:border-primary/50 bg-transparent hover:shadow-[0_0_15px_rgba(223,46,53,0.2)] transition-all duration-300"
                 >
                   <Twitter className="w-4 h-4" />
                 </Button>
                 <Button
                   variant="outline"
                   size="icon"
-                  className="rounded-full border-white/20 hover:bg-white/10 bg-transparent"
+                  className="rounded-full border-white/20 hover:bg-white/10 hover:border-primary/50 bg-transparent hover:shadow-[0_0_15px_rgba(223,46,53,0.2)] transition-all duration-300"
                 >
                   <Github className="w-4 h-4" />
                 </Button>
@@ -61,21 +65,28 @@ export default function Footer() {
 
             {/* Services */}
             <div className="space-y-6">
-              <h3 className="font-inter font-semibold text-lg">Services</h3>
+              <h3 className="font-semibold text-lg relative inline-block">
+                Services
+                <span className="absolute -bottom-1 left-0 w-12 h-0.5 bg-primary"></span>
+              </h3>
               <div className="space-y-3">
-                <Link href="/ai-solutions" className="block text-white/80 hover:text-white transition-colors text-sm">
+                <Link href="/ai-solutions" className="block text-white/80 hover:text-white hover:translate-x-1 transition-all duration-300 text-sm flex items-center">
+                  <span className="w-1.5 h-1.5 bg-primary/70 rounded-full mr-2"></span>
                   AI & Machine Learning
                 </Link>
-                <Link href="/iot-systems" className="block text-white/80 hover:text-white transition-colors text-sm">
+                <Link href="/iot-systems" className="block text-white/80 hover:text-white hover:translate-x-1 transition-all duration-300 text-sm flex items-center">
+                  <span className="w-1.5 h-1.5 bg-primary/70 rounded-full mr-2"></span>
                   IoT & Smart Systems
                 </Link>
-                <Link href="/cloud-services" className="block text-white/80 hover:text-white transition-colors text-sm">
+                <Link href="/cloud-services" className="block text-white/80 hover:text-white hover:translate-x-1 transition-all duration-300 text-sm flex items-center">
+                  <span className="w-1.5 h-1.5 bg-primary/70 rounded-full mr-2"></span>
                   Cloud & DevOps
                 </Link>
                 <Link
                   href="/digital-marketing"
-                  className="block text-white/80 hover:text-white transition-colors text-sm"
+                  className="block text-white/80 hover:text-white hover:translate-x-1 transition-all duration-300 text-sm flex items-center"
                 >
+                  <span className="w-1.5 h-1.5 bg-primary/70 rounded-full mr-2"></span>
                   Digital Marketing
                 </Link>
               </div>
@@ -83,18 +94,25 @@ export default function Footer() {
 
             {/* Company */}
             <div className="space-y-6">
-              <h3 className="font-inter font-semibold text-lg">Company</h3>
+              <h3 className="font-semibold text-lg relative inline-block">
+                Company
+                <span className="absolute -bottom-1 left-0 w-12 h-0.5 bg-primary"></span>
+              </h3>
               <div className="space-y-3">
-                <Link href="/about" className="block text-white/80 hover:text-white transition-colors text-sm">
+                <Link href="/about" className="block text-white/80 hover:text-white hover:translate-x-1 transition-all duration-300 text-sm flex items-center">
+                  <span className="w-1.5 h-1.5 bg-primary/70 rounded-full mr-2"></span>
                   About Us
                 </Link>
-                <Link href="/case-studies" className="block text-white/80 hover:text-white transition-colors text-sm">
+                <Link href="/case-studies" className="block text-white/80 hover:text-white hover:translate-x-1 transition-all duration-300 text-sm flex items-center">
+                  <span className="w-1.5 h-1.5 bg-primary/70 rounded-full mr-2"></span>
                   Case Studies
                 </Link>
-                <Link href="/careers" className="block text-white/80 hover:text-white transition-colors text-sm">
+                <Link href="/careers" className="block text-white/80 hover:text-white hover:translate-x-1 transition-all duration-300 text-sm flex items-center">
+                  <span className="w-1.5 h-1.5 bg-primary/70 rounded-full mr-2"></span>
                   Careers
                 </Link>
-                <Link href="/blog" className="block text-white/80 hover:text-white transition-colors text-sm">
+                <Link href="/blog" className="block text-white/80 hover:text-white hover:translate-x-1 transition-all duration-300 text-sm flex items-center">
+                  <span className="w-1.5 h-1.5 bg-primary/70 rounded-full mr-2"></span>
                   Blog
                 </Link>
               </div>
@@ -102,44 +120,86 @@ export default function Footer() {
 
             {/* Contact */}
             <div className="space-y-6">
-              <h3 className="font-inter font-semibold text-lg">Contact</h3>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3 text-sm">
-                  <Phone className="w-4 h-4 text-primary" />
-                  <span className="text-white/80">+91 98765 43210</span>
+              <h3 className="font-semibold text-lg relative inline-block">
+                Contact
+                <span className="absolute -bottom-1 left-0 w-12 h-0.5 bg-primary"></span>
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3 text-sm group hover:translate-x-1 transition-all duration-300">
+                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shadow-inner">
+                    <Phone className="w-4 h-4 text-primary" />
+                  </div>
+                  <span className="text-white/80 group-hover:text-white transition-colors">+91 98765 43210</span>
                 </div>
-                <div className="flex items-center space-x-3 text-sm">
-                  <Mail className="w-4 h-4 text-primary" />
-                  <span className="text-white/80">hello@canosolutions.com</span>
+                <div className="flex items-center space-x-3 text-sm group hover:translate-x-1 transition-all duration-300">
+                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shadow-inner">
+                    <Mail className="w-4 h-4 text-primary" />
+                  </div>
+                  <span className="text-white/80 group-hover:text-white transition-colors">hello@canosolutions.com</span>
                 </div>
-                <div className="flex items-start space-x-3 text-sm">
-                  <MapPin className="w-4 h-4 text-primary mt-0.5" />
-                  <span className="text-white/80">Nashik & Pune, Maharashtra, India</span>
+                <div className="flex items-start space-x-3 text-sm group hover:translate-x-1 transition-all duration-300">
+                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shadow-inner mt-0.5">
+                    <MapPin className="w-4 h-4 text-primary" />
+                  </div>
+                  <span className="text-white/80 group-hover:text-white transition-colors">Nashik & Pune, Maharashtra, India</span>
                 </div>
               </div>
 
-              {/* Newsletter */}
-              <div className="bg-white/5 p-4 rounded-lg">
-                <NewsletterSubscription />
+
+            </div>
+          </div>
+          
+          {/* Newsletter Section - Horizontal */}
+          <div className="border-t border-white/10 pt-12 mt-8">
+            <div className="max-w-3xl mx-auto">
+              <div className="bg-white/5 p-6 rounded-xl shadow-inner border border-white/5 backdrop-blur-sm">
+                <div className="flex flex-col md:flex-row md:items-center gap-6">
+                  <div className="flex items-center gap-3 md:w-1/3">
+                    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shadow-inner">
+                      <Mail className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">Stay Updated</h3>
+                      <p className="text-white/80 text-sm">Get our latest news and updates</p>
+                    </div>
+                  </div>
+                  <div className="md:w-2/3">
+                    <form className="flex flex-col sm:flex-row gap-3">
+                      <Input
+                        type="email"
+                        placeholder="Enter your email"
+                        required
+                        className="bg-white/10 border-white/20 text-white placeholder:text-white/50 flex-grow"
+                      />
+                      <Button
+                        type="submit"
+                        className="bg-primary hover:bg-primary/90 text-white whitespace-nowrap"
+                      >
+                        Subscribe
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Bottom Footer */}
-        <div className="py-6">
+        <div className="py-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-white/60 text-sm">
-              © {new Date().getFullYear()} CanoSolutions Private Limited. All rights reserved.
+              © {new Date().getFullYear()} <span className="text-white/80 font-medium">CanoSolutions Private Limited</span>. All rights reserved.
             </div>
-            <div className="flex space-x-6 text-sm">
-              <Link href="/privacy" className="text-white/60 hover:text-white transition-colors">
+            <div className="flex space-x-8 text-sm">
+              <Link href="/privacy" className="text-white/60 hover:text-white transition-colors hover:underline decoration-primary underline-offset-4">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="text-white/60 hover:text-white transition-colors">
+              <Link href="/terms" className="text-white/60 hover:text-white transition-colors hover:underline decoration-primary underline-offset-4">
                 Terms of Service
               </Link>
-              <Link href="/cookies" className="text-white/60 hover:text-white transition-colors">
+              <Link href="/cookies" className="text-white/60 hover:text-white transition-colors hover:underline decoration-primary underline-offset-4">
                 Cookie Policy
               </Link>
             </div>

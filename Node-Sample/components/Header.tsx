@@ -59,16 +59,17 @@ export default function Header() {
           <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group">
             <div className="relative">
               <Image
-                src="/canosolutions_logo.jpeg"
+                src="/canosolutions_logo.jpg"
                 alt="CanoSolutions Logo"
-                width={40}
-                height={40}
-                className="sm:w-[45px] sm:h-[45px] rounded-xl transition-transform group-hover:scale-105"
+                width={80}
+                height={80}
+                className="w-auto h-auto object-contain rounded-xl transition-transform group-hover:scale-105"
+                style={{ maxWidth: '80px', maxHeight: '80px' }}
               />
               <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </div>
             <div className="hidden xs:block">
-              <div className="font-inter font-bold text-textPrimary text-lg sm:text-xl tracking-tight">CanoSolutions</div>
+              <div className=" font-bold text-textPrimary text-lg sm:text-xl tracking-tight">CanoSolutions</div>
               <div className="text-xs text-primary font-medium -mt-1">Think. Innovate. Create.</div>
             </div>
           </Link>

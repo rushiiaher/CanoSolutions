@@ -42,7 +42,7 @@ export default function CaseStudiesSection() {
       <div className="container-max">
         {/* Section Header */}
         <div className="text-center space-y-4 mb-16">
-          <h2 className="text-h2 font-inter font-bold text-textPrimary">Success Stories</h2>
+          <h2 className="text-h2  font-bold text-textPrimary">Success Stories</h2>
           <p className="text-xl text-textSecondary max-w-3xl mx-auto">
             Real results from real clients. See how we've helped organizations transform their operations and achieve
             measurable outcomes.
@@ -69,7 +69,7 @@ export default function CaseStudiesSection() {
                     <Badge variant="secondary">Case Study</Badge>
                   </div>
 
-                  <h3 className="text-h3 font-inter font-bold text-textPrimary">{study.title}</h3>
+                  <h3 className="text-h3  font-bold text-textPrimary">{study.title}</h3>
 
                   <p className="text-textSecondary leading-relaxed">{study.description}</p>
                 </div>

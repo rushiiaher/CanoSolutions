@@ -194,7 +194,7 @@ export default function ConsultationForm({
       <CardContent className="p-8">
         <div className="space-y-6">
           <div>
-            <h3 className="text-2xl font-inter font-bold text-textPrimary mb-2">{title}</h3>
+            <h3 className="text-2xl  font-bold text-textPrimary mb-2">{title}</h3>
             <p className="text-textSecondary">{description}</p>
           </div>
           {formContent}

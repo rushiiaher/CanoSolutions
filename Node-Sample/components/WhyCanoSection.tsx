@@ -29,7 +29,7 @@ export default function WhyCanoSection() {
       <div className="container-max">
         {/* Section Header */}
         <div className="text-center space-y-4 mb-16">
-          <h2 className="text-h2 font-inter font-bold text-textPrimary">Why Choose CanoSolutions?</h2>
+          <h2 className="text-h2  font-bold text-textPrimary">Why Choose CanoSolutions?</h2>
           <p className="text-xl text-textSecondary max-w-3xl mx-auto">
             We combine startup agility with enterprise expertise, delivering innovative solutions that drive measurable
             business outcomes.
@@ -43,23 +43,24 @@ export default function WhyCanoSection() {
             return (
               <Card
                 key={feature.title}
-                className={`bg-white border-0 shadow-lg card-hover fade-in-up`}
+                className={`bg-white border-0 shadow-[0_10px_30px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] transition-all duration-300 rounded-xl overflow-hidden fade-in-up`}
                 style={{ animationDelay: `${index * 200}ms` }}
               >
-                <CardContent className="p-8 text-center space-y-6">
+                <div className="h-1 bg-gradient-to-r from-primary to-primary/70"></div>
+                <CardContent className="p-10 text-center space-y-8">
                   {/* Icon */}
-                  <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
-                    <IconComponent className="w-8 h-8 text-primary" />
+                  <div className="w-20 h-20 mx-auto bg-primary/10 rounded-full flex items-center justify-center shadow-[0_10px_20px_rgba(223,46,53,0.15)] border border-primary/5">
+                    <IconComponent className="w-10 h-10 text-primary" />
                   </div>
 
                   {/* Badge */}
-                  <div className="inline-block bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium shadow-sm">
                     {feature.highlight}
                   </div>
 
                   {/* Content */}
-                  <div className="space-y-3">
-                    <h3 className="text-xl font-inter font-semibold text-textPrimary">{feature.title}</h3>
+                  <div className="space-y-4">
+                    <h3 className="text-2xl font-semibold text-textPrimary">{feature.title}</h3>
                     <p className="text-textSecondary leading-relaxed">{feature.description}</p>
                   </div>
                 </CardContent>
@@ -69,25 +70,27 @@ export default function WhyCanoSection() {
         </div>
 
         {/* Stats Section */}
-        <div className="mt-16 bg-white rounded-card p-8 shadow-lg">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-3xl font-bold text-primary mb-2">2022</div>
-              <div className="text-textSecondary">Established</div>
+        <div className="mt-20 bg-white rounded-xl p-10 shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-borders/10 relative overflow-hidden">
+         
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center relative z-10">
+            <div className="transform hover:-translate-y-1 transition-transform duration-300">
+              <div className="text-4xl font-bold text-primary mb-3">2022</div>
+              <div className="text-textSecondary font-medium">Established</div>
             </div>
-            <div>
-              <div className="text-3xl font-bold text-primary mb-2">100+</div>
-              <div className="text-textSecondary">Projects</div>
+            <div className="transform hover:-translate-y-1 transition-transform duration-300">
+              <div className="text-4xl font-bold text-primary mb-3">100+</div>
+              <div className="text-textSecondary font-medium">Projects</div>
             </div>
-            <div>
-              <div className="text-3xl font-bold text-primary mb-2">100+</div>
-              <div className="text-textSecondary">Happy Clients</div>
+            <div className="transform hover:-translate-y-1 transition-transform duration-300">
+              <div className="text-4xl font-bold text-primary mb-3">100+</div>
+              <div className="text-textSecondary font-medium">Happy Clients</div>
             </div>
-            <div>
-              <div className="text-3xl font-bold text-primary mb-2">100%</div>
-              <div className="text-textSecondary">On-Time Delivery</div>
+            <div className="transform hover:-translate-y-1 transition-transform duration-300">
+              <div className="text-4xl font-bold text-primary mb-3">100%</div>
+              <div className="text-textSecondary font-medium">On-Time Delivery</div>
             </div>
           </div>
+          <div className="absolute bottom-0 right-0 w-40 h-40 bg-primary/5 rounded-full -mr-20 -mb-20 z-0"></div>
         </div>
       </div>
     </section>

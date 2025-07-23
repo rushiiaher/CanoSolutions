@@ -88,7 +88,7 @@ export default function IoTSystemsPage() {
               <Badge variant="outline" className="border-primary text-primary">
                 LMS & IoT Systems
               </Badge>
-              <h1 className="text-h1 font-inter font-bold text-textPrimary">
+              <h1 className="text-h1  font-bold text-textPrimary">
                 Transform Learning with <span className="text-gradient">LMS & IoT</span> Solutions
               </h1>
               <p className="text-xl text-textSecondary leading-relaxed max-w-3xl mx-auto">
@@ -129,7 +129,7 @@ export default function IoTSystemsPage() {
       <section className="section-padding">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">LMS & IoT Solutions</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">LMS & IoT Solutions</h2>
             <p className="text-xl text-textSecondary max-w-3xl mx-auto">
               Comprehensive learning management and IoT solutions that enhance education and optimize operations.
             </p>
@@ -146,7 +146,7 @@ export default function IoTSystemsPage() {
                     </div>
 
                     <div className="space-y-3">
-                      <h3 className="text-xl font-inter font-semibold text-textPrimary">{service.title}</h3>
+                      <h3 className="text-xl  font-semibold text-textPrimary">{service.title}</h3>
                       <p className="text-textSecondary">{service.description}</p>
                     </div>
 
@@ -170,7 +170,7 @@ export default function IoTSystemsPage() {
       <section className="section-padding bg-neutralCard">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Industry Applications</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Industry Applications</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Tailored IoT solutions delivering measurable results across various sectors
             </p>
@@ -191,7 +191,7 @@ export default function IoTSystemsPage() {
                     <Badge className="bg-primary/10 text-primary border-primary/20">
                       {industry.name}
                     </Badge>
-                    <h3 className="text-lg font-inter font-semibold text-textPrimary">{industry.title}</h3>
+                    <h3 className="text-lg  font-semibold text-textPrimary">{industry.title}</h3>
                     <p className="text-textSecondary text-sm">{industry.description}</p>
                     
                     <div className="space-y-2">
@@ -218,7 +218,7 @@ export default function IoTSystemsPage() {
       <section className="section-padding">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">LMS & IoT Technology Stack</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">LMS & IoT Technology Stack</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Advanced learning management and IoT technologies for comprehensive educational solutions
             </p>
@@ -236,7 +236,7 @@ export default function IoTSystemsPage() {
       <section className="section-padding bg-neutralCard">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Implementation Process</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Implementation Process</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Structured approach to successful LMS and IoT deployment and integration
             </p>
@@ -254,7 +254,7 @@ export default function IoTSystemsPage() {
                   <div className="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto text-xl font-bold">
                     {phase.step}
                   </div>
-                  <h3 className="text-lg font-inter font-semibold text-textPrimary">{phase.title}</h3>
+                  <h3 className="text-lg  font-semibold text-textPrimary">{phase.title}</h3>
                   <p className="text-textSecondary text-sm">{phase.description}</p>
                 </CardContent>
               </Card>
@@ -267,7 +267,7 @@ export default function IoTSystemsPage() {
       <section className="section-padding bg-primary text-white">
         <div className="container-max text-center">
           <div className="max-w-3xl mx-auto space-y-8">
-            <h2 className="text-h2 font-inter font-bold">Ready to Transform Learning & Operations?</h2>
+            <h2 className="text-h2  font-bold">Ready to Transform Learning & Operations?</h2>
             <p className="text-xl opacity-90">
               Get a free LMS and IoT assessment to discover how our solutions can enhance education 
               and optimize your organizational operations.

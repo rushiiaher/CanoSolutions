@@ -85,7 +85,7 @@ export default function WebDevelopmentPage() {
               <Badge variant="outline" className="border-primary text-primary">
                 Web Development
               </Badge>
-              <h1 className="text-h1 font-inter font-bold text-textPrimary">
+              <h1 className="text-h1  font-bold text-textPrimary">
                 Build Modern <span className="text-gradient">Web Applications</span> That Drive Results
               </h1>
               <p className="text-xl text-textSecondary leading-relaxed max-w-3xl mx-auto">
@@ -126,7 +126,7 @@ export default function WebDevelopmentPage() {
       <section className="section-padding">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Our Web Development Services</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Our Web Development Services</h2>
             <p className="text-xl text-textSecondary max-w-3xl mx-auto">
               Comprehensive web solutions designed to meet your business objectives and user expectations.
             </p>
@@ -143,7 +143,7 @@ export default function WebDevelopmentPage() {
                     </div>
 
                     <div className="space-y-3">
-                      <h3 className="text-xl font-inter font-semibold text-textPrimary">{service.title}</h3>
+                      <h3 className="text-xl  font-semibold text-textPrimary">{service.title}</h3>
                       <p className="text-textSecondary">{service.description}</p>
                     </div>
 
@@ -167,7 +167,7 @@ export default function WebDevelopmentPage() {
       <section className="section-padding bg-neutralCard">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Featured Projects</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Featured Projects</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Real-world web applications delivering measurable business impact
             </p>
@@ -185,7 +185,7 @@ export default function WebDevelopmentPage() {
                     className="w-full h-48 object-cover rounded-t-card"
                   />
                   <div className="p-6 space-y-4">
-                    <h3 className="text-lg font-inter font-semibold text-textPrimary">{project.title}</h3>
+                    <h3 className="text-lg  font-semibold text-textPrimary">{project.title}</h3>
                     <p className="text-textSecondary text-sm">{project.description}</p>
                     
                     <div className="space-y-2">
@@ -212,7 +212,7 @@ export default function WebDevelopmentPage() {
       <section className="section-padding">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Our Technology Stack</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Our Technology Stack</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Modern technologies and frameworks for robust, scalable web solutions
             </p>
@@ -230,7 +230,7 @@ export default function WebDevelopmentPage() {
       <section className="section-padding bg-neutralCard">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Our Development Process</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Our Development Process</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Structured approach ensuring quality delivery and client satisfaction
             </p>
@@ -248,7 +248,7 @@ export default function WebDevelopmentPage() {
                   <div className="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto text-xl font-bold">
                     {phase.step}
                   </div>
-                  <h3 className="text-lg font-inter font-semibold text-textPrimary">{phase.title}</h3>
+                  <h3 className="text-lg  font-semibold text-textPrimary">{phase.title}</h3>
                   <p className="text-textSecondary text-sm">{phase.description}</p>
                 </CardContent>
               </Card>
@@ -261,7 +261,7 @@ export default function WebDevelopmentPage() {
       <section className="section-padding bg-primary text-white">
         <div className="container-max text-center">
           <div className="max-w-3xl mx-auto space-y-8">
-            <h2 className="text-h2 font-inter font-bold">Ready to Build Your Web Presence?</h2>
+            <h2 className="text-h2  font-bold">Ready to Build Your Web Presence?</h2>
             <p className="text-xl opacity-90">
               Get a free consultation and discover how our web development expertise can transform 
               your digital presence and drive business growth.

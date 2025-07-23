@@ -91,7 +91,7 @@ export default function AISolutionsPage() {
               <Badge variant="outline" className="border-primary text-primary">
                 AI & Machine Learning
               </Badge>
-              <h1 className="text-h1 font-inter font-bold text-textPrimary">
+              <h1 className="text-h1  font-bold text-textPrimary">
                 Harness the Power of <span className="text-gradient">Intelligent Automation</span>
               </h1>
               <p className="text-xl text-textSecondary leading-relaxed max-w-3xl mx-auto">
@@ -132,7 +132,7 @@ export default function AISolutionsPage() {
       <section className="section-padding">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Our AI Solutions</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Our AI Solutions</h2>
             <p className="text-xl text-textSecondary max-w-3xl mx-auto">
               Comprehensive AI services designed to solve real business challenges and drive measurable outcomes.
             </p>
@@ -149,7 +149,7 @@ export default function AISolutionsPage() {
                     </div>
 
                     <div className="space-y-3">
-                      <h3 className="text-xl font-inter font-semibold text-textPrimary">{service.title}</h3>
+                      <h3 className="text-xl  font-semibold text-textPrimary">{service.title}</h3>
                       <p className="text-textSecondary">{service.description}</p>
                     </div>
 
@@ -173,7 +173,7 @@ export default function AISolutionsPage() {
       <section className="section-padding bg-neutralCard">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Real-World Applications</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Real-World Applications</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               See how our AI solutions deliver measurable results across industries
             </p>
@@ -191,7 +191,7 @@ export default function AISolutionsPage() {
                     className="w-full h-48 object-cover rounded-t-card"
                   />
                   <div className="p-6 space-y-4">
-                    <h3 className="text-lg font-inter font-semibold text-textPrimary">{useCase.title}</h3>
+                    <h3 className="text-lg  font-semibold text-textPrimary">{useCase.title}</h3>
                     <p className="text-textSecondary text-sm">{useCase.description}</p>
                     <div className="bg-success/10 text-success px-3 py-1 rounded-full text-sm font-medium inline-block">
                       {useCase.savings}
@@ -208,7 +208,7 @@ export default function AISolutionsPage() {
       <section className="section-padding">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Our AI Technology Stack</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Our AI Technology Stack</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               We use industry-leading tools and frameworks to build robust AI solutions
             </p>
@@ -226,7 +226,7 @@ export default function AISolutionsPage() {
       <section className="section-padding bg-primary text-white">
         <div className="container-max text-center">
           <div className="max-w-3xl mx-auto space-y-8">
-            <h2 className="text-h2 font-inter font-bold">Ready to Transform Your Business with AI?</h2>
+            <h2 className="text-h2  font-bold">Ready to Transform Your Business with AI?</h2>
             <p className="text-xl opacity-90">
               Get a free AI readiness assessment and discover the opportunities for intelligent automation in your
               organization.

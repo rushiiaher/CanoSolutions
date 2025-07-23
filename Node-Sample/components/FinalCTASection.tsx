@@ -11,7 +11,7 @@ export default function FinalCTASection() {
           {/* Left Column - CTA Content */}
           <div className="space-y-8">
             <div className="space-y-6">
-              <h2 className="text-h2 font-inter font-bold">Ready to Join the Digital Revolution?</h2>
+              <h2 className="text-h2  font-bold">Ready to Join the Digital Revolution?</h2>
               <p className="text-xl opacity-90 leading-relaxed">
                 Transform your business with cutting-edge AI, IoT, and Cloud solutions. Let's discuss how we can help
                 you achieve your digital transformation goals.

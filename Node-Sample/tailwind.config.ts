@@ -57,7 +57,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        helvetica: ["Helvetica Now", "sans-serif"],
+        poppins: ["var(--font-poppins)", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
       },
       fontSize: {

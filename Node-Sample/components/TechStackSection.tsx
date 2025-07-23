@@ -32,7 +32,7 @@ export default function TechStackSection({ techStack }: TechStackSectionProps) {
       <div className="container-max">
         {/* Section Header */}
         <div className="text-center space-y-4 mb-16">
-          <h2 className="text-h2 font-inter font-bold text-textPrimary">Our Technology Expertise</h2>
+          <h2 className="text-h2  font-bold text-textPrimary">Our Technology Expertise</h2>
           <p className="text-xl text-textSecondary max-w-3xl mx-auto">
             From AI-powered automation to smart IoT systems, we deliver comprehensive technology solutions that drive
             real business transformation.
@@ -61,7 +61,7 @@ export default function TechStackSection({ techStack }: TechStackSectionProps) {
 
                   {/* Content */}
                   <div className="space-y-3">
-                    <h3 className="text-xl font-inter font-semibold text-textPrimary">{tech.name}</h3>
+                    <h3 className="text-xl  font-semibold text-textPrimary">{tech.name}</h3>
                     <p className="text-textSecondary text-sm leading-relaxed">{tech.description}</p>
                   </div>
 

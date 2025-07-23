@@ -113,7 +113,7 @@ export default function AndroidDevelopmentPage() {
               <Badge variant="outline" className="border-primary text-primary">
                 Android Development
               </Badge>
-              <h1 className="text-h1 font-inter font-bold text-textPrimary">
+              <h1 className="text-h1  font-bold text-textPrimary">
                 Create Powerful <span className="text-gradient">Android Apps</span> That Users Love
               </h1>
               <p className="text-xl text-textSecondary leading-relaxed max-w-3xl mx-auto">
@@ -154,7 +154,7 @@ export default function AndroidDevelopmentPage() {
       <section className="section-padding">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Our Android Development Services</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Our Android Development Services</h2>
             <p className="text-xl text-textSecondary max-w-3xl mx-auto">
               Comprehensive mobile app development solutions tailored to your business needs and user expectations.
             </p>
@@ -171,7 +171,7 @@ export default function AndroidDevelopmentPage() {
                     </div>
 
                     <div className="space-y-3">
-                      <h3 className="text-xl font-inter font-semibold text-textPrimary">{service.title}</h3>
+                      <h3 className="text-xl  font-semibold text-textPrimary">{service.title}</h3>
                       <p className="text-textSecondary">{service.description}</p>
                     </div>
 
@@ -195,7 +195,7 @@ export default function AndroidDevelopmentPage() {
       <section className="section-padding bg-neutralCard">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Essential App Features</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Essential App Features</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Modern Android app capabilities that enhance user engagement and business value
             </p>
@@ -210,7 +210,7 @@ export default function AndroidDevelopmentPage() {
                     <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
                       <IconComponent className="w-8 h-8 text-primary" />
                     </div>
-                    <h3 className="text-lg font-inter font-semibold text-textPrimary">{feature.title}</h3>
+                    <h3 className="text-lg  font-semibold text-textPrimary">{feature.title}</h3>
                     <p className="text-textSecondary text-sm">{feature.description}</p>
                   </CardContent>
                 </Card>
@@ -224,7 +224,7 @@ export default function AndroidDevelopmentPage() {
       <section className="section-padding">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Featured Android Apps</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Featured Android Apps</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Successful mobile applications delivering real business impact and user satisfaction
             </p>
@@ -242,7 +242,7 @@ export default function AndroidDevelopmentPage() {
                     className="w-full h-48 object-cover rounded-t-card"
                   />
                   <div className="p-6 space-y-4">
-                    <h3 className="text-lg font-inter font-semibold text-textPrimary">{project.title}</h3>
+                    <h3 className="text-lg  font-semibold text-textPrimary">{project.title}</h3>
                     <p className="text-textSecondary text-sm">{project.description}</p>
                     
                     <div className="space-y-2">
@@ -274,7 +274,7 @@ export default function AndroidDevelopmentPage() {
       <section className="section-padding bg-neutralCard">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">Android Development Stack</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">Android Development Stack</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Latest Android technologies and tools for building robust, scalable mobile applications
             </p>
@@ -292,7 +292,7 @@ export default function AndroidDevelopmentPage() {
       <section className="section-padding">
         <div className="container-max">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-h2 font-inter font-bold text-textPrimary">App Development Process</h2>
+            <h2 className="text-h2  font-bold text-textPrimary">App Development Process</h2>
             <p className="text-xl text-textSecondary max-w-4xl mx-auto">
               Proven methodology ensuring successful app launches and user satisfaction
             </p>
@@ -311,7 +311,7 @@ export default function AndroidDevelopmentPage() {
                   <div className="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto text-xl font-bold">
                     {phase.step}
                   </div>
-                  <h3 className="text-lg font-inter font-semibold text-textPrimary">{phase.title}</h3>
+                  <h3 className="text-lg  font-semibold text-textPrimary">{phase.title}</h3>
                   <p className="text-textSecondary text-sm">{phase.description}</p>
                 </CardContent>
               </Card>
@@ -324,7 +324,7 @@ export default function AndroidDevelopmentPage() {
       <section className="section-padding bg-primary text-white">
         <div className="container-max text-center">
           <div className="max-w-3xl mx-auto space-y-8">
-            <h2 className="text-h2 font-inter font-bold">Ready to Launch Your Android App?</h2>
+            <h2 className="text-h2  font-bold">Ready to Launch Your Android App?</h2>
             <p className="text-xl opacity-90">
               Transform your mobile app idea into reality with our expert Android development team. 
               Get a free consultation and project estimate today.

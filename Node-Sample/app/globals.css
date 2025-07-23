@@ -2,30 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Helvetica Now Font */
-@font-face {
-  font-family: 'Helvetica Now';
-  src: url('/fonts/HelveticaNow-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Helvetica Now';
-  src: url('/fonts/HelveticaNow-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Helvetica Now';
-  src: url('/fonts/HelveticaNow-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
+/* Poppins font is loaded via Google Fonts in layout.tsx */
 
 @layer base {
   :root {
@@ -79,7 +56,7 @@
   
   body {
     @apply bg-background text-foreground;
-    font-family: 'Helvetica Now', sans-serif;
+    font-family: var(--font-poppins), sans-serif;
     line-height: 1.6;
   }
 
@@ -93,7 +70,7 @@
   h4,
   h5,
   h6 {
-    font-family: 'Helvetica Now', sans-serif;
+    font-family: var(--font-poppins), sans-serif;
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.2;
@@ -124,19 +101,19 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-primary text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0;
+    @apply bg-primary text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-[0_10px_20px_rgba(223,46,53,0.2)] hover:-translate-y-1 active:translate-y-0 border border-primary/20;
   }
 
   .btn-secondary {
-    @apply border-2 border-primary text-primary px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:bg-primary hover:text-white;
+    @apply border-2 border-primary text-primary px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:shadow-[0_10px_20px_rgba(223,46,53,0.15)] hover:-translate-y-1;
   }
 
   .card-hover {
-    @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-1 hover:border-primary;
+    @apply transition-all duration-300 hover:shadow-[0_15px_30px_rgba(0,0,0,0.1)] hover:-translate-y-2 hover:border-primary;
   }
 
   .section-padding {
-    @apply py-8 px-4 sm:py-12 md:py-16 md:px-6 lg:px-8;
+    @apply py-12 px-4 sm:py-16 md:py-20 md:px-6 lg:px-8;
   }
 
   .touch-target {
@@ -144,15 +121,31 @@
   }
 
   .responsive-grid {
-    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8;
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 lg:gap-10;
   }
 
   .container-max {
-    @apply max-w-7xl mx-auto;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
   .text-gradient {
     @apply bg-gradient-to-r from-primary to-[#0066CC] bg-clip-text text-transparent;
+  }
+  
+  .premium-card {
+    @apply bg-white rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] border-0 overflow-hidden transition-all duration-300 hover:-translate-y-1;
+  }
+  
+  .premium-shadow {
+    @apply shadow-[0_10px_30px_rgba(0,0,0,0.08)];
+  }
+  
+  .premium-border {
+    @apply border border-borders/20 rounded-xl;
+  }
+  
+  .premium-gradient {
+    @apply bg-gradient-to-r from-primary via-primary/80 to-primary/50;
   }
 }
 

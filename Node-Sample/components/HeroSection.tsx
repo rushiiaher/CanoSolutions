@@ -11,7 +11,7 @@ export default function HeroSection() {
     <section 
       className="relative min-h-screen flex items-center justify-center px-4 py-8 sm:py-12 md:py-16"
       style={{
-        backgroundImage: 'url(/BGFCANO/bg1.jpg)',
+        backgroundImage: 'none',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
@@ -27,7 +27,7 @@ export default function HeroSection() {
               
 
               <div className="space-y-4">
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-inter font-bold text-Black leading-tight">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-Black leading-tight">
                   Transform Your Business with <span className="text-gradient">AI-Powered Solutions</span>
                 </h1>
                 <p className="text-base sm:text-lg text-Black/90 leading-relaxed">
