@@ -55,6 +55,22 @@ export default function ConsultationForm({
     try {
       console.log('Submitting form to /.netlify/functions/inquiry')
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || '/.netlify/functions'
+      
+      // First check if the database connection is working
+      try {
+        const testResponse = await fetch(`${apiUrl}/db-test`)
+        if (!testResponse.ok) {
+          const testData = await testResponse.json()
+          console.error('Database connection test failed:', testData)
+          setSubmitMessage('Database connection issue. Please try again later or contact support.')
+          setIsSubmitting(false)
+          return
+        }
+      } catch (testError) {
+        console.log('DB test error (continuing with form submission):', testError)
+        // Continue with form submission even if test fails
+      }
+      
       const response = await fetch(`${apiUrl}/inquiry`, {
         method: 'POST',
         headers: {
@@ -66,7 +82,16 @@ export default function ConsultationForm({
         }),
       })
 
-      const data = await response.json()
+      let data
+      try {
+        data = await response.json()
+      } catch (parseError) {
+        console.error('Error parsing response:', parseError)
+        setSubmitMessage('Error processing server response. Please try again.')
+        setIsSubmitting(false)
+        return
+      }
+      
       console.log('Response status:', response.status)
       
       if (response.ok) {
@@ -83,11 +108,12 @@ export default function ConsultationForm({
         })
       } else {
         console.error('Form submission error:', data)
-        setSubmitMessage(data.error || data.details || 'Failed to submit inquiry')
+        const errorMessage = data.details || data.error || 'Failed to submit inquiry'
+        setSubmitMessage(`Error: ${errorMessage}`)
       }
     } catch (error) {
       console.error('Form submission network error:', error)
-      setSubmitMessage('Network error. Please try again.')
+      setSubmitMessage('Network error. Please try again or contact support.')
     } finally {
       setIsSubmitting(false)
     }

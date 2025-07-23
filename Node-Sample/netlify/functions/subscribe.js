@@ -1,55 +1,4 @@
-const { MongoClient } = require('mongodb');
-
-let cachedClient = null;
-
-async function connectToDatabase() {
-  // Check if we have a cached client and if it's still connected
-  if (cachedClient) {
-    try {
-      // Test the connection with a simple ping
-      await cachedClient.db('admin').command({ ping: 1 });
-      console.log('Using cached MongoDB connection');
-      return cachedClient;
-    } catch (error) {
-      console.log('Cached connection is stale, creating new connection');
-      cachedClient = null;
-    }
-  }
-
-  if (!process.env.MONGODB_URI) {
-    throw new Error('MONGODB_URI environment variable is not set');
-  }
-  
-  // Ensure URI has the correct protocol prefix
-  let uri = process.env.MONGODB_URI;
-  if (!uri.startsWith('mongodb://') && !uri.startsWith('mongodb+srv://')) {
-    uri = 'mongodb+srv://' + uri;
-  }
-  
-  console.log('Creating new MongoDB connection...');
-  console.log('MongoDB URI format check:', uri.substring(0, 20) + '...');
-  
-  // Optimized options for serverless environments
-  const client = new MongoClient(uri, {
-    serverSelectionTimeoutMS: 5000,
-    connectTimeoutMS: 10000,
-    maxPoolSize: 1, // Limit connection pool for serverless
-    minPoolSize: 0,
-    maxIdleTimeMS: 30000, // Close connections after 30 seconds of inactivity
-    bufferMaxEntries: 0 // Disable mongoose buffering
-  });
-  
-  try {
-    await client.connect();
-    console.log('Successfully connected to MongoDB');
-    cachedClient = client;
-    return client;
-  } catch (error) {
-    console.error('MongoDB connection error:', error.message);
-    // Don't throw the error, return null instead
-    return null;
-  }
-}
+const { connectToDatabase } = require('./utils/mongodb');
 
 exports.handler = async (event, context) => {
   const headers = {
@@ -233,13 +182,21 @@ exports.handler = async (event, context) => {
 
   } catch (error) {
     console.error('Error in subscribe function:', error);
+    console.error('Error details:', {
+      message: error.message,
+      name: error.name,
+      stack: error.stack
+    });
+    
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({ 
         error: 'Internal server error',
         details: error.message,
-        stack: process.env.NODE_ENV !== 'production' ? error.stack : undefined
+        type: error.name,
+        // Always include stack trace for debugging
+        stack: error.stack
       })
     };
   }
