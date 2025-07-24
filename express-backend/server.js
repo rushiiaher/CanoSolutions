@@ -67,9 +67,9 @@ app.get('/api/health', async (req, res) => {
 // Inquiry endpoints
 app.post('/api/inquiry', async (req, res) => {
   try {
-    const { firstName, lastName, email, phone, company, message } = req.body;
+    const { firstName, lastName, email, phone, company, service, message } = req.body;
 
-    if (!firstName || !lastName || !email || !phone || !message) {
+    if (!firstName || !lastName || !email || !phone || !service || !message) {
       return res.status(400).json({
         error: 'All required fields must be filled'
       });
@@ -81,6 +81,7 @@ app.post('/api/inquiry', async (req, res) => {
       email,
       phone,
       company: company || '',
+      service,
       message,
       createdAt: new Date(),
       status: 'new'

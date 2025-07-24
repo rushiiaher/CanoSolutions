@@ -8,18 +8,19 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Mail, Phone, Building, Calendar, Filter, Search, Users, MessageSquare } from "lucide-react"
+import { Mail, Phone, Building, Calendar, Filter, Search, Users, MessageSquare, Briefcase } from "lucide-react";
 
 interface InquiryForm {
-  _id: string
-  firstName: string
-  lastName: string
-  email: string
-  phone: string
-  company?: string
-  message: string
-  createdAt: string
-  status: string
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  company?: string;
+  service: string;
+  message: string;
+  createdAt: string;
+  status: string;
 }
 
 interface EmailSubscription {
@@ -275,6 +276,10 @@ export default function AdminDashboard() {
                               <span>{inquiry.company}</span>
                             </div>
                           )}
+                          <div className="flex items-center gap-2">
+                            <Briefcase className="h-4 w-4" />
+                            <span>{inquiry.service}</span>
+                          </div>
                           <div className="flex items-center gap-2">
                             <Calendar className="h-4 w-4" />
                             <span>{formatDate(inquiry.createdAt)}</span>

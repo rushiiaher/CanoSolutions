@@ -13,9 +13,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ApiService } from "@/lib/api-utils"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
@@ -26,8 +27,9 @@ const formSchema = z.object({
   email: z.string().email("Invalid email address"),
   phone: z.string().min(10, "Invalid phone number"),
   company: z.string().optional(),
+  service: z.string().min(1, "Please select a service"),
   message: z.string().min(10, "Message is too short").max(500),
-})
+});
 
 type ConsultationFormProps = {
   title?: string
@@ -53,9 +55,10 @@ export default function ConsultationForm({
       email: "",
       phone: "",
       company: "",
+      service: "",
       message: "",
     },
-  })
+  });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
@@ -167,6 +170,31 @@ export default function ConsultationForm({
                   <FormControl>
                     <Input placeholder="Your Company" {...field} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="service"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Interested Service</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a service" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="Web Development">Web Development</SelectItem>
+                      <SelectItem value="Android Development">Android Development</SelectItem>
+                      <SelectItem value="AI & Machine Learning">AI & Machine Learning</SelectItem>
+                      <SelectItem value="LMS/IoT Solutions">LMS/IoT Solutions</SelectItem>
+                      <SelectItem value="Cloud Infrastructure">Cloud Infrastructure</SelectItem>
+                      <SelectItem value="Digital Marketing">Digital Marketing</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
