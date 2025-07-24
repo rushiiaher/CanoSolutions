@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(helmet());
-const allowedOrigins = (process.env.VITE_ORIGIN || 'http://localhost:3000,http://localhost:3001').split(',');
+const allowedOrigins = (process.env.VITE_ORIGIN || 'http://localhost:3000,http://localhost:3001,https://canosolutions.netlify.app').split(',');
 
 app.use(cors({
   origin: (origin, callback) => {
