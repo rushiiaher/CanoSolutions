@@ -27,7 +27,7 @@ export default function Footer() {
                     />
                   </div>
                   <div>
-                    <div className="font-bold text-xs tracking-tight">CanoSolutions</div>
+                    <div className="font-bold text-xs tracking-tight">Cano Solutions</div>
                     <div className="text-10px text-white/70 font-medium">Think. Innovate. Create.</div>
                   </div>
                 </div>
@@ -163,7 +163,7 @@ export default function Footer() {
         <div className="py-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-white/60 text-sm">
-              © {new Date().getFullYear()} <span className="text-white/80 font-medium">CanoSolutions Private Limited</span>. All rights reserved.
+              © {new Date().getFullYear()} <span className="text-white/80 font-medium">Cano Solutions Private Limited</span>. All rights reserved.
             </div>
             <div className="flex space-x-8 text-sm">
               <Link href="/privacy" className="text-white/60 hover:text-white transition-colors hover:underline decoration-primary underline-offset-4">

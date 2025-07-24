@@ -64,7 +64,7 @@ export default function HomePage() {
       name: "Rajesh Sharma",
       role: "IT Director",
       content:
-        "CanoSolutions delivered exceptional AI solutions that transformed our business operations. Their government grant recognition speaks to their credibility.",
+        "Cano Solutions delivered exceptional AI solutions that transformed our business operations. Their government grant recognition speaks to their credibility.",
       company: "Maharashtra Enterprise",
     },
     {
@@ -78,7 +78,7 @@ export default function HomePage() {
       name: "Dr. Amit Kulkarni",
       role: "Government Official",
       content:
-        "As Holkar Grant winners, CanoSolutions proved their innovation capabilities. Professional service and cutting-edge solutions.",
+        "As Holkar Grant winners, Cano Solutions proved their innovation capabilities. Professional service and cutting-edge solutions.",
       company: "Government of Maharashtra",
     },
   ]

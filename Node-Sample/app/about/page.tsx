@@ -5,16 +5,16 @@ import { Award, Users, Target, Lightbulb } from "lucide-react"
 import Image from "next/image"
 
 export const metadata: Metadata = {
-  title: "About CanoSolutions | Leading IT Solutions Company in Maharashtra",
+  title: "About Cano Solutions | Leading IT Solutions Company in Maharashtra",
   description:
-    "Learn about CanoSolutions - Government grant winner delivering innovative AI, IoT & Cloud solutions since 2022. Meet our team and discover our mission.",
+    "Learn about Cano Solutions - Government grant winner delivering innovative AI, IoT & Cloud solutions since 2022. Meet our team and discover our mission.",
 }
 
 const milestones = [
   {
     year: "2022",
     event: "Company Founded",
-    description: "CanoSolutions established with vision to transform businesses through technology",
+    description: "Cano Solutions established with vision to transform businesses through technology",
   },
   {
     year: "2022",
@@ -71,13 +71,13 @@ export default function AboutPage() {
             <div className="space-y-8">
               <div className="space-y-4">
                 <Badge variant="outline" className="border-primary text-primary">
-                  About CanoSolutions
+                  About Cano Solutions
                 </Badge>
                 <h1 className="text-h1  font-bold text-textPrimary">
                   Transforming Businesses Through <span className="text-gradient">Innovation</span>
                 </h1>
                 <p className="text-xl text-textSecondary leading-relaxed">
-                  Founded in 2022, CanoSolutions has rapidly emerged as Maharashtra's most trusted partner for AI, IoT,
+                  Founded in 2022, Cano Solutions has rapidly emerged as Maharashtra's most trusted partner for AI, IoT,
                   and digital transformation solutions. We combine startup agility with enterprise expertise to deliver
                   cutting-edge technology solutions.
                 </p>

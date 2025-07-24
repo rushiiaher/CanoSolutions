@@ -5,7 +5,7 @@ export default function TermsPage() {
         <h1 className="text-4xl font-bold mb-8">Terms of Service</h1>
         <div className="prose max-w-4xl">
           <p>Last updated: {new Date().getFullYear()}</p>
-          <p>These terms govern your use of CanoSolutions services.</p>
+          <p>These terms govern your use of Cano Solutions services.</p>
         </div>
       </div>
     </div>

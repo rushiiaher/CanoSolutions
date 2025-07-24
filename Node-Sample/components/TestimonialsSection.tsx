@@ -13,7 +13,7 @@ const testimonials = [
     position: "Director",
     company: "Holkar Science City",
     content:
-      "CanoSolutions delivered an exceptional smart city solution that exceeded our expectations. Their innovative approach and technical expertise made them the perfect partner for our government initiative.",
+      "Cano Solutions delivered an exceptional smart city solution that exceeded our expectations. Their innovative approach and technical expertise made them the perfect partner for our government initiative.",
     rating: 5,
     image: "/placeholder.svg?height=80&width=80",
   },
@@ -23,7 +23,7 @@ const testimonials = [
     position: "CTO",
     company: "TechCorp Industries",
     content:
-      "The AI-powered automation system developed by CanoSolutions transformed our manufacturing processes. We've seen a 40% increase in efficiency and significant cost savings.",
+      "The AI-powered automation system developed by Cano Solutions transformed our manufacturing processes. We've seen a 40% increase in efficiency and significant cost savings.",
     rating: 5,
     image: "/placeholder.svg?height=80&width=80",
   },
@@ -58,7 +58,7 @@ export default function TestimonialsSection() {
           <h2 className="text-h2  font-bold text-textPrimary">What Our Clients Say</h2>
           <p className="text-xl text-textSecondary max-w-4xl mx-auto">
             Don't just take our word for it. Here's what government organizations and enterprises say about working with
-            CanoSolutions.
+            Cano Solutions.
           </p>
         </div>
 

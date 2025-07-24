@@ -31,7 +31,7 @@ export default function LogoScroll({ className = "", variant = "government" }: L
         <div className="logo-scroll animate-scroll">
           {scrollLogos.map((logo, index) => (
             <div key={index} className="logo-item">
-              <div className="bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-sm flex items-center justify-center h-16 w-36">
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-sm flex items-center justify-center h-26 w-26">
                 <Image
                   src={logo.src}
                   alt={logo.alt}

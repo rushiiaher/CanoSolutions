@@ -7,7 +7,7 @@ const teamMembers = [
   {
     name: "Abhijit Prakash Nikam",
     position: "Director & Co-Founder",
-    bio: "Visionary leader driving CanoSolutions' mission to transform businesses through innovative AI and IoT solutions. Expert in digital transformation and government partnerships.",
+    bio: "Visionary leader driving Cano Solutions' mission to transform businesses through innovative AI and IoT solutions. Expert in digital transformation and government partnerships.",
     image: "/abhi.jpeg",
     linkedin: "#",
     github: "#",

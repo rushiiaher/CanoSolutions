@@ -69,7 +69,7 @@ export default function Header() {
               <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </div>
             <div className="hidden xs:block">
-              <div className=" font-bold text-textPrimary text-lg sm:text-xl tracking-tight">CanoSolutions</div>
+              <div className=" font-bold text-textPrimary text-lg sm:text-xl tracking-tight">Cano Solutions</div>
               <div className="text-xs text-primary font-medium -mt-1">Think. Innovate. Create.</div>
             </div>
           </Link>

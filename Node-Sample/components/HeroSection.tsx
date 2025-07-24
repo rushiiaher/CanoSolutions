@@ -67,24 +67,11 @@ export default function HeroSection() {
               
               {/* Corporate Logo Scroll - Added between buttons and stats */}
               <div className="py-4">
-                <p className="text-sm text-black/80 mb-2 text-center lg:text-left">Trusted By:</p>
+                <p className="text-xl text-black/80 mb-2 text-center lg:text-left">Trusted By:</p>
                 <LogoScroll className="bg-white/10 rounded-lg" />
               </div>
 
-              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/20 max-w-sm mx-auto lg:mx-0">
-                <div className="text-center lg:text-left">
-                  <div className="text-xl sm:text-2xl font-bold text-primary">100+</div>
-                  <div className="text-xs sm:text-sm text-black/80">Projects</div>
-                </div>
-                <div className="text-center lg:text-left">
-                  <div className="text-xl sm:text-2xl font-bold text-primary">₹10Cr+</div>
-                  <div className="text-xs sm:text-sm text-black/80">Savings</div>
-                </div>
-                <div className="text-center lg:text-left">
-                  <div className="text-xl sm:text-2xl font-bold text-primary">99%</div>
-                  <div className="text-xs sm:text-sm text-black/80">Satisfaction</div>
-                </div>
-              </div>
+              
             </div>
           </div>
 

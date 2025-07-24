@@ -7,7 +7,7 @@ import Image from "next/image"
 import TechLogo from "@/components/TechLogo"
 
 export const metadata: Metadata = {
-  title: "Android App Development Services | CanoSolutions",
+  title: "Android App Development Services | Cano Solutions",
   description:
     "Professional Android app development in Pune & Maharashtra. Native Android apps, cross-platform solutions, and mobile app consulting services.",
 }

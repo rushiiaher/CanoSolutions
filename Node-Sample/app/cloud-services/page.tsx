@@ -7,7 +7,7 @@ import Image from "next/image"
 import TechLogo from "@/components/TechLogo"
 
 export const metadata: Metadata = {
-  title: "Cloud Services & Infrastructure | CanoSolutions",
+  title: "Cloud Services & Infrastructure | Cano Solutions",
   description:
     "Professional cloud services in Pune & Maharashtra. Cloud migration, DevOps, containerization, and scalable cloud infrastructure solutions.",
 }

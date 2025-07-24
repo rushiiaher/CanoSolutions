@@ -8,7 +8,7 @@ export default function WhatsAppWidget() {
   const [isOpen, setIsOpen] = useState(false)
 
   const whatsappNumber = "+919876543210"
-  const message = "Hi! I'm interested in learning more about CanoSolutions' services."
+  const message = "Hi! I'm interested in learning more about Cano Solutions' services."
 
   const openWhatsApp = () => {
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`

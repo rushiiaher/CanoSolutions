@@ -29,7 +29,7 @@ export default function WhyCanoSection() {
       <div className="container-max">
         {/* Section Header */}
         <div className="text-center space-y-4 mb-16">
-          <h2 className="text-h2  font-bold text-textPrimary">Why Choose CanoSolutions?</h2>
+          <h2 className="text-h2  font-bold text-textPrimary">Why Choose Cano Solutions?</h2>
           <p className="text-xl text-textSecondary max-w-3xl mx-auto">
             We combine startup agility with enterprise expertise, delivering innovative solutions that drive measurable
             business outcomes.
