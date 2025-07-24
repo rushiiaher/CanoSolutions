@@ -1,8 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { useState, useEffect } from "react";
+import { ApiService } from "@/lib/api-utils";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -45,25 +46,24 @@ export default function AdminDashboard() {
   }, [inquiries, searchTerm, statusFilter])
 
   const fetchData = async () => {
+    setLoading(true);
     try {
-      const [inquiriesRes, subscriptionsRes] = await Promise.all([
-        fetch('/.netlify/functions/inquiry'),
-        fetch('/.netlify/functions/subscribe')
-      ])
-      
-      const inquiriesData = inquiriesRes.ok ? await inquiriesRes.json() : []
-      const subscriptionsData = subscriptionsRes.ok ? await subscriptionsRes.json() : []
-      
-      setInquiries(Array.isArray(inquiriesData) ? inquiriesData : [])
-      setSubscriptions(Array.isArray(subscriptionsData) ? subscriptionsData : [])
+      const [inquiriesData, subscriptionsData] = await Promise.all([
+        ApiService.getInquiries(),
+        ApiService.getSubscriptions(),
+      ]);
+      setInquiries(Array.isArray(inquiriesData) ? inquiriesData : []);
+      setSubscriptions(
+        Array.isArray(subscriptionsData) ? subscriptionsData : []
+      );
     } catch (error) {
-      console.error('Error fetching data:', error)
-      setInquiries([])
-      setSubscriptions([])
+      console.error("Error fetching data:", error);
+      setInquiries([]);
+      setSubscriptions([]);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const filterInquiries = () => {
     let filtered = inquiries

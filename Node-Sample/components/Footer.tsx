@@ -1,8 +1,8 @@
-import Link from "next/link"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Linkedin, Twitter, Github, Mail, Phone, MapPin, ArrowRight } from "lucide-react"
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Linkedin, Twitter, Github, Mail, Phone, MapPin } from "lucide-react";
+import NewsletterSubscription from "./NewsletterSubscription";
 
 export default function Footer() {
   return (
@@ -153,34 +153,7 @@ export default function Footer() {
           <div className="border-t border-white/10 pt-12 mt-8">
             <div className="max-w-3xl mx-auto">
               <div className="bg-white/5 p-6 rounded-xl shadow-inner border border-white/5 backdrop-blur-sm">
-                <div className="flex flex-col md:flex-row md:items-center gap-6">
-                  <div className="flex items-center gap-3 md:w-1/3">
-                    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shadow-inner">
-                      <Mail className="h-5 w-5 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">Stay Updated</h3>
-                      <p className="text-white/80 text-sm">Get our latest news and updates</p>
-                    </div>
-                  </div>
-                  <div className="md:w-2/3">
-                    <form className="flex flex-col sm:flex-row gap-3">
-                      <Input
-                        type="email"
-                        placeholder="Enter your email"
-                        required
-                        className="bg-white/10 border-white/20 text-white placeholder:text-white/50 flex-grow"
-                      />
-                      <Button
-                        type="submit"
-                        className="bg-primary hover:bg-primary/90 text-white whitespace-nowrap"
-                      >
-                        Subscribe
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </Button>
-                    </form>
-                  </div>
-                </div>
+                <NewsletterSubscription />
               </div>
             </div>
           </div>
