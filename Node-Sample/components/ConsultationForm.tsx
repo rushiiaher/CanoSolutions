@@ -90,7 +90,7 @@ export default function ConsultationForm({
         <CardTitle
           className={cn("font-bold", {
             "text-gray-900 text-2xl": variant === "hero",
-            "text-white text-3xl": variant === "section",
+            "text-gray-900 text-3xl": variant === "section",
           })}
         >
           {title}
@@ -98,7 +98,7 @@ export default function ConsultationForm({
         <CardDescription
           className={cn({
             "text-gray-600": variant === "hero" || variant === "contact",
-            "text-white/90": variant === "section",
+            "text-gray-700": variant === "section",
           })}
         >
           {description}

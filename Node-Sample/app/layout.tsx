@@ -18,12 +18,17 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: "IT Solutions Company in Pune | AI, IoT & Cloud Services - Cano Solutions",
+  title: "Cano Solutions",
   description:
     "Government grant winner Cano Solutions offers cutting-edge AI, IoT, Cloud Computing & Smart Systems solutions. Transform your business with our innovative IT services in Pune & Maharashtra.",
   keywords:
     "IT solutions Pune, AI services, IoT solutions, Cloud computing, Smart systems, Government IT partner, Digital transformation Maharashtra",
-    generator: 'v0.dev'
+  generator: 'v0.dev',
+  icons: {
+    icon: '/canosolutions_logo.jpg',
+    shortcut: '/canosolutions_logo.jpg',
+    apple: '/canosolutions_logo.jpg',
+  },
 }
 
 export default function RootLayout({

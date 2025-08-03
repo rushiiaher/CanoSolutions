@@ -199,13 +199,22 @@
   width: 100%;
 }
 
-/* Logo scroll animation */
-@keyframes scroll {
+/* Logo scroll animations */
+@keyframes scrollLeftToRight {
   0% {
-    transform: translateX(0);
+    transform: translateX(-100%);
   }
   100% {
-    transform: translateX(calc(-250px * 4)); /* Adjust based on logo width */
+    transform: translateX(0%);
+  }
+}
+
+@keyframes scrollRightToLeft {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
   }
 }
 
@@ -213,21 +222,24 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding: 15px 0;
+  padding: 8px 0;
 }
 
 .logo-scroll {
   display: flex;
-  animation: scroll 20s linear infinite;
+  width: fit-content;
 }
 
 .logo-item {
   flex-shrink: 0;
-  width: 200px;
-  margin: 0 25px;
+  width: 140px;
+  margin: 0 10px;
 }
 
-.animate-scroll {
-  animation: scroll 20s linear infinite;
-  display: flex;
+.animate-scroll-left-to-right {
+  animation: scrollLeftToRight 25s linear infinite;
+}
+
+.animate-scroll-right-to-left {
+  animation: scrollRightToLeft 25s linear infinite;
 }
