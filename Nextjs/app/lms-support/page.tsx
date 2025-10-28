@@ -46,7 +46,7 @@ export default function LMSSupportPage() {
                 <Clock className="w-12 h-12 text-orange-500 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-textPrimary mb-2">Quick Response</h3>
                 <p className="text-textSecondary mb-3">Average response time</p>
-                <p className="text-orange-500 font-semibold">< 4 Hours</p>
+                <p className="text-orange-500 font-semibold">Less than 4 Hours</p>
               </CardContent>
             </Card>
           </div>
