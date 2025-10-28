@@ -1,7 +1,7 @@
 [build]
   base = "Nextjs"
   command = "npm run build"
-  publish = "out"
+  publish = "Nextjs/out"
 
 [build.environment]
   NODE_VERSION = "18"
