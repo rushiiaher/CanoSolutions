@@ -1,0 +1,1052 @@
+# LMS Reporting System - Architecture Document
+## Integrated with Cano Solutions Website (canosolutions.in)
+
+---
+
+## 1. System Overview
+
+### Purpose
+A comprehensive LMS (Learning Management System) Reporting Panel integrated into the existing Cano Solutions website to track, monitor, and manage educational institutions' performance, complaints, and operations.
+
+### Technology Stack (Existing)
+- **Frontend**: Next.js (React framework)
+- **Backend**: Express.js
+- **Database**: MongoDB
+- **Domain**: canosolutions.in
+
+### New Integration Components
+- **LMS Reporting Dashboard** (Admin Panel)
+- **Inquiry Form Management** (from existing website)
+- **Subscription Form Management** (from existing website)
+- **Analytics & Reports Module**
+- **Multi-tenant School Management**
+
+---
+
+## 2. System Architecture
+
+### High-Level Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                  CANO SOLUTIONS WEBSITE                      │
+│                  (canosolutions.in)                          │
+├─────────────────────────────────────────────────────────────┤
+│                                                               │
+│  ┌────────────────────┐      ┌────────────────────┐        │
+│  │  Public Website    │      │   Admin Panel      │        │
+│  │  - Home            │      │   - LMS Reports    │        │
+│  │  - Services        │      │   - Inquiries      │        │
+│  │  - Contact         │      │   - Subscriptions  │        │
+│  │  - Inquiry Form    │      │   - Analytics      │        │
+│  │  - Subscribe Form  │      │   - Settings       │        │
+│  └────────────────────┘      └────────────────────┘        │
+│           ↓                            ↓                     │
+│  ┌──────────────────────────────────────────────┐          │
+│  │           Next.js Frontend Layer             │          │
+│  │  - SSR (Server Side Rendering)               │          │
+│  │  - Client Components                         │          │
+│  │  - API Routes                                │          │
+│  └──────────────────────────────────────────────┘          │
+│                       ↓                                      │
+│  ┌──────────────────────────────────────────────┐          │
+│  │           Express.js Backend API             │          │
+│  │  - Authentication & Authorization            │          │
+│  │  - Business Logic                            │          │
+│  │  - Data Validation                           │          │
+│  │  - File Handling                             │          │
+│  └──────────────────────────────────────────────┘          │
+│                       ↓                                      │
+│  ┌──────────────────────────────────────────────┐          │
+│  │              MongoDB Database                │          │
+│  │  - Users & Roles                             │          │
+│  │  - Schools & Assets                          │          │
+│  │  - Complaints/Tickets                        │          │
+│  │  - Inquiries & Subscriptions                 │          │
+│  │  - Reports & Analytics                       │          │
+│  └──────────────────────────────────────────────┘          │
+│                                                               │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Integration Architecture
+
+```
+Existing Website (canosolutions.in)
+│
+├── /admin (Protected Route - NEW ADDITION)
+│   ├── /dashboard          → LMS Overview Dashboard
+│   ├── /schools            → School Management
+│   ├── /assets             → Asset/Inventory Management
+│   ├── /complaints         → Ticket Management
+│   ├── /reports            → Analytics & Reports
+│   ├── /inquiries          → Website Inquiry Management
+│   ├── /subscriptions      → Newsletter Subscriptions
+│   └── /settings           → System Configuration
+│
+├── /api (Backend Routes)
+│   ├── /auth               → Login, Register, JWT
+│   ├── /schools            → CRUD for schools
+│   ├── /assets             → CRUD for assets
+│   ├── /tickets            → Complaint management
+│   ├── /inquiries          → Form submissions
+│   ├── /subscriptions      → Newsletter management
+│   └── /reports            → Analytics endpoints
+│
+└── / (Public Website - Existing)
+    ├── Home
+    ├── Services
+    ├── Contact (Inquiry Form)
+    └── Subscribe (Newsletter Form)
+```
+
+---
+
+## 3. User Roles & Access Control
+
+### Role Hierarchy
+
+1. **Super Admin** (Cano Solutions Team)
+   - Full system access
+   - Manage all schools, users, settings
+   - View global analytics
+   - Manage inquiries and subscriptions
+
+2. **Admin / Operations Manager**
+   - Manage assigned schools
+   - Create and assign tickets
+   - View reports for their region
+   - Manage school users
+
+3. **School Admin**
+   - View own school data only
+   - Raise complaints for their school
+   - View ticket status
+   - Basic reports for their school
+
+4. **School User**
+   - Raise tickets/complaints
+   - View own tickets
+   - Upload attachments
+   - Track resolution status
+
+5. **Technician / Field Engineer**
+   - View assigned tickets
+   - Update ticket status
+   - Upload work evidence
+   - Mark tickets resolved
+
+6. **Vendor / Supplier**
+   - View assigned work orders
+   - Update job status
+   - Submit invoices
+   - View warranty items
+
+---
+
+## 4. Core Modules
+
+### Module 1: Dashboard (Landing Page)
+
+**Visual Layout:**
+```
+┌─────────────────────────────────────────────────────────────┐
+│ [Logo] Cano Solutions LMS    [Notifications] [Profile ▼]    │
+├──────────┬──────────────────────────────────────────────────┤
+│          │  Dashboard Overview                              │
+│ Schools  │                                                   │
+│ Assets   │  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐           │
+│ Tickets  │  │ 156  │ │  42  │ │  18  │ │ 95%  │           │
+│ Reports  │  │Schools│ │Active│ │Pending│ │ SLA │           │
+│ Inquiries│  │      │ │Tickets│ │Issues│ │ Rate │           │
+│ Subscribe│  └──────┘ └──────┘ └──────┘ └──────┘           │
+│ Settings │                                                   │
+│          │  Recent Complaints                               │
+│          │  ┌───────────────────────────────────────────┐  │
+│          │  │ #1234 | Digital Board | ABC School | P1  │  │
+│          │  │ #1235 | UPS Issue     | XYZ School | P2  │  │
+│          │  └───────────────────────────────────────────┘  │
+│          │                                                   │
+│          │  Quick Actions                                   │
+│          │  [+ New School] [+ New Ticket] [View Reports]   │
+└──────────┴──────────────────────────────────────────────────┘
+```
+
+**Key Metrics Cards:**
+- Total Schools
+- Active Tickets
+- Pending Assignments
+- SLA Compliance Rate
+- Assets Under Warranty
+- Monthly Ticket Trend
+- Top 5 Failing Equipment
+- Vendor Performance Score
+
+### Module 2: School Management
+
+**Features:**
+- Add/Edit/Delete Schools
+- Bulk Import via CSV
+- School Profile:
+  - Basic Info (Name, Address, Region, Contact)
+  - Assigned Tender/Batch
+  - Asset Count
+  - Ticket History
+  - Assigned Users
+- Search and Filter (by region, tender, status)
+- School Tags (Urban, Rural, Priority)
+
+**Data Structure:**
+```javascript
+School {
+  _id: ObjectId,
+  name: String,
+  code: String (unique),
+  address: {
+    street: String,
+    city: String,
+    state: String,
+    pincode: String
+  },
+  region: String,
+  contact: {
+    name: String,
+    phone: String,
+    email: String,
+    designation: String
+  },
+  tender_id: ObjectId,
+  assets_count: Number,
+  active_tickets: Number,
+  tags: [String],
+  status: Enum ['active', 'inactive', 'under_maintenance'],
+  created_at: Date,
+  updated_at: Date
+}
+```
+
+### Module 3: Asset/Inventory Management
+
+**Features:**
+- Register Assets (Individual or Bulk)
+- Asset Categories:
+  - Digital Boards
+  - Smart TVs
+  - Computers/Laptops
+  - Projectors
+  - UPS Systems
+  - CCTV Cameras
+  - Network Equipment
+  - Furniture
+- Warranty Tracking
+- Maintenance History
+- QR Code Generation for each asset
+- Asset Transfer between locations
+- Depreciation Tracking
+
+**Data Structure:**
+```javascript
+Asset {
+  _id: ObjectId,
+  school_id: ObjectId,
+  asset_code: String (unique),
+  category: String,
+  sub_category: String,
+  name: String,
+  model: String,
+  serial_number: String,
+  location: String (Room 101, Lab A),
+  purchase_date: Date,
+  purchase_price: Number,
+  warranty: {
+    type: Enum ['manufacturer', 'vendor', 'extended'],
+    duration_months: Number,
+    start_date: Date,
+    end_date: Date,
+    vendor_id: ObjectId,
+    invoice_number: String
+  },
+  status: Enum ['in_service', 'under_repair', 'retired', 'lost'],
+  condition: Enum ['excellent', 'good', 'fair', 'poor'],
+  maintenance_history: [{
+    date: Date,
+    type: String,
+    description: String,
+    cost: Number,
+    performed_by: String
+  }],
+  attachments: [String], // URLs
+  qr_code: String,
+  created_at: Date,
+  updated_at: Date
+}
+```
+
+### Module 4: Ticket/Complaint Management
+
+**Ticket Lifecycle:**
+```
+New → Assigned → In Progress → Resolved → Closed
+                      ↓
+                  Escalated
+                      ↓
+                  Reopened
+```
+
+**Ticket Priority & SLA:**
+- **P1 (Critical)**: 4 hours response, 24 hours resolution
+- **P2 (High)**: 8 hours response, 48 hours resolution
+- **P3 (Medium)**: 24 hours response, 5 days resolution
+- **P4 (Low)**: 48 hours response, 10 days resolution
+
+**Features:**
+- Create Ticket (with asset selection)
+- Assign to Technician/Vendor
+- Status Tracking
+- Comment Thread
+- File Attachments (images, PDFs)
+- SLA Timer with visual indicators
+- Auto-escalation on SLA breach
+- Bulk Operations
+- Ticket Merging (duplicates)
+
+**Data Structure:**
+```javascript
+Ticket {
+  _id: ObjectId,
+  ticket_number: String (auto-generated),
+  school_id: ObjectId,
+  asset_id: ObjectId (optional),
+  title: String,
+  description: String,
+  category: Enum ['hardware', 'software', 'network', 'facility', 'other'],
+  priority: Enum ['P1', 'P2', 'P3', 'P4'],
+  status: Enum ['new', 'assigned', 'in_progress', 'resolved', 'closed', 'reopened'],
+  raised_by: ObjectId (user),
+  assigned_to: ObjectId (technician/vendor),
+  assignment_history: [{
+    assigned_to: ObjectId,
+    assigned_by: ObjectId,
+    assigned_at: Date,
+    notes: String
+  }],
+  warranty_status: Enum ['in_warranty', 'out_of_warranty', 'extended'],
+  sla: {
+    response_deadline: Date,
+    resolution_deadline: Date,
+    response_met: Boolean,
+    resolution_met: Boolean,
+    breach_reason: String
+  },
+  timeline: [{
+    timestamp: Date,
+    action: String,
+    performed_by: ObjectId,
+    details: String
+  }],
+  attachments: [{
+    url: String,
+    filename: String,
+    uploaded_by: ObjectId,
+    uploaded_at: Date
+  }],
+  resolution: {
+    notes: String,
+    resolved_by: ObjectId,
+    resolved_at: Date,
+    parts_used: [String],
+    labor_hours: Number,
+    cost: Number
+  },
+  feedback: {
+    rating: Number (1-5),
+    comments: String,
+    provided_by: ObjectId,
+    provided_at: Date
+  },
+  tags: [String],
+  created_at: Date,
+  updated_at: Date,
+  closed_at: Date
+}
+```
+
+### Module 5: Reports & Analytics
+
+**Dashboard Reports:**
+
+1. **Ticket Analytics**
+   - Tickets by Status (Pie Chart)
+   - Tickets by Priority (Bar Chart)
+   - Daily/Weekly/Monthly Trends (Line Chart)
+   - Average Resolution Time
+   - SLA Compliance Rate
+
+2. **School Performance**
+   - Top 10 Schools by Ticket Volume
+   - Schools with Most SLA Breaches
+   - Schools with Pending Tickets
+   - Regional Comparison
+
+3. **Asset Reports**
+   - Assets by Category
+   - Warranty Expiration Calendar
+   - Most Failing Equipment
+   - Asset Utilization Rate
+   - Depreciation Summary
+
+4. **Technician Performance**
+   - Tickets Resolved
+   - Average Response Time
+   - Average Resolution Time
+   - Rating/Feedback Score
+   - Workload Distribution
+
+5. **Vendor Analysis**
+   - Vendor Response Time
+   - Vendor Success Rate
+   - Cost Analysis
+   - Warranty Claims
+
+**Export Options:**
+- PDF Reports
+- Excel Exports
+- Scheduled Email Reports
+- Custom Date Ranges
+
+### Module 6: Inquiry Management (Website Integration)
+
+**Purpose:** Manage inquiries submitted through the contact form on canosolutions.in
+
+**Features:**
+- View all inquiries in tabular format
+- Filter by date, status, source
+- Mark as Read/Unread
+- Respond directly via email
+- Assign to team members
+- Add internal notes
+- Convert to lead/opportunity
+- Export inquiry data
+
+**Data Structure:**
+```javascript
+Inquiry {
+  _id: ObjectId,
+  name: String,
+  email: String,
+  phone: String,
+  company: String,
+  subject: String,
+  message: String,
+  source: String ('website', 'landing_page', 'campaign'),
+  status: Enum ['new', 'contacted', 'qualified', 'converted', 'closed'],
+  priority: Enum ['low', 'medium', 'high'],
+  assigned_to: ObjectId,
+  notes: [{
+    text: String,
+    added_by: ObjectId,
+    added_at: Date
+  }],
+  follow_up_date: Date,
+  tags: [String],
+  ip_address: String,
+  user_agent: String,
+  created_at: Date,
+  updated_at: Date
+}
+```
+
+**Admin Panel View:**
+```
+┌────────────────────────────────────────────────────────────┐
+│ Inquiries                         [Export] [+ Add Manual]  │
+├────────────────────────────────────────────────────────────┤
+│ [All] [New: 24] [Contacted] [Qualified] [Converted]       │
+├────────────────────────────────────────────────────────────┤
+│ Date       | Name          | Email         | Status | ...  │
+├────────────────────────────────────────────────────────────┤
+│ 2025-10-05 | Rajesh Kumar  | raj@xyz.com   | New    | →    │
+│ 2025-10-04 | Priya Sharma  | priya@abc.com | Contacted | → │
+│ 2025-10-03 | Amit Patel    | amit@def.com  | Qualified | → │
+└────────────────────────────────────────────────────────────┘
+```
+
+### Module 7: Subscription Management (Newsletter)
+
+**Purpose:** Manage newsletter subscriptions from canosolutions.in
+
+**Features:**
+- View all subscribers
+- Active/Inactive status
+- Subscription source tracking
+- Bulk email capabilities
+- Unsubscribe management
+- Segment subscribers
+- Export subscriber list
+- Integration with email marketing tools
+
+**Data Structure:**
+```javascript
+Subscription {
+  _id: ObjectId,
+  email: String (unique),
+  name: String (optional),
+  status: Enum ['active', 'unsubscribed', 'bounced'],
+  source: String ('homepage', 'blog', 'popup'),
+  subscribed_at: Date,
+  unsubscribed_at: Date,
+  tags: [String],
+  preferences: {
+    frequency: Enum ['daily', 'weekly', 'monthly'],
+    topics: [String]
+  },
+  engagement: {
+    emails_sent: Number,
+    emails_opened: Number,
+    links_clicked: Number,
+    last_opened: Date
+  },
+  ip_address: String,
+  user_agent: String,
+  created_at: Date,
+  updated_at: Date
+}
+```
+
+### Module 8: User Management
+
+**Features:**
+- Create/Edit/Delete Users
+- Assign Roles and Permissions
+- Link Users to Schools
+- Password Reset
+- Activity Log
+- User Groups
+
+**Data Structure:**
+```javascript
+User {
+  _id: ObjectId,
+  name: String,
+  email: String (unique),
+  phone: String,
+  password_hash: String,
+  role: Enum ['super_admin', 'admin', 'school_admin', 'school_user', 'technician', 'vendor'],
+  schools: [ObjectId], // Can access multiple schools
+  permissions: [String],
+  profile_image: String,
+  status: Enum ['active', 'inactive', 'suspended'],
+  last_login: Date,
+  login_count: Number,
+  created_at: Date,
+  updated_at: Date
+}
+```
+
+---
+
+## 5. Database Schema (MongoDB Collections)
+
+### Collections Overview
+
+1. **users** - All system users
+2. **schools** - Educational institutions
+3. **tenders** - School batches/tenders
+4. **assets** - Equipment inventory
+5. **tickets** - Complaints/Issues
+6. **inquiries** - Website contact form submissions
+7. **subscriptions** - Newsletter subscribers
+8. **vendors** - Service providers
+9. **notifications** - System notifications
+10. **audit_logs** - Activity tracking
+11. **reports** - Saved report configurations
+12. **settings** - System configuration
+
+### Indexes for Performance
+
+```javascript
+// users collection
+users.createIndex({ email: 1 }, { unique: true })
+users.createIndex({ role: 1, status: 1 })
+
+// schools collection
+schools.createIndex({ code: 1 }, { unique: true })
+schools.createIndex({ region: 1, status: 1 })
+
+// assets collection
+assets.createIndex({ school_id: 1, status: 1 })
+assets.createIndex({ serial_number: 1 }, { unique: true })
+assets.createIndex({ 'warranty.end_date': 1 })
+
+// tickets collection
+tickets.createIndex({ ticket_number: 1 }, { unique: true })
+tickets.createIndex({ school_id: 1, status: 1, created_at: -1 })
+tickets.createIndex({ assigned_to: 1, status: 1 })
+tickets.createIndex({ status: 1, priority: 1, created_at: -1 })
+
+// inquiries collection
+inquiries.createIndex({ email: 1, created_at: -1 })
+inquiries.createIndex({ status: 1, created_at: -1 })
+
+// subscriptions collection
+subscriptions.createIndex({ email: 1 }, { unique: true })
+subscriptions.createIndex({ status: 1, subscribed_at: -1 })
+```
+
+---
+
+## 6. API Design
+
+### Authentication APIs
+
+```
+POST   /api/auth/login
+POST   /api/auth/register
+POST   /api/auth/logout
+POST   /api/auth/refresh-token
+POST   /api/auth/forgot-password
+POST   /api/auth/reset-password
+GET    /api/auth/me
+```
+
+### School APIs
+
+```
+GET    /api/schools
+GET    /api/schools/:id
+POST   /api/schools
+PUT    /api/schools/:id
+DELETE /api/schools/:id
+POST   /api/schools/bulk-import
+GET    /api/schools/:id/assets
+GET    /api/schools/:id/tickets
+GET    /api/schools/:id/stats
+```
+
+### Asset APIs
+
+```
+GET    /api/assets
+GET    /api/assets/:id
+POST   /api/assets
+PUT    /api/assets/:id
+DELETE /api/assets/:id
+POST   /api/assets/bulk-import
+GET    /api/assets/warranty-expiring
+POST   /api/assets/:id/transfer
+GET    /api/assets/:id/history
+```
+
+### Ticket APIs
+
+```
+GET    /api/tickets
+GET    /api/tickets/:id
+POST   /api/tickets
+PUT    /api/tickets/:id
+DELETE /api/tickets/:id
+POST   /api/tickets/:id/assign
+POST   /api/tickets/:id/status
+POST   /api/tickets/:id/comment
+POST   /api/tickets/:id/attachment
+GET    /api/tickets/:id/timeline
+POST   /api/tickets/:id/resolve
+POST   /api/tickets/:id/close
+POST   /api/tickets/:id/reopen
+```
+
+### Inquiry APIs (NEW)
+
+```
+GET    /api/inquiries
+GET    /api/inquiries/:id
+POST   /api/inquiries (from website form)
+PUT    /api/inquiries/:id
+DELETE /api/inquiries/:id
+POST   /api/inquiries/:id/respond
+POST   /api/inquiries/:id/assign
+POST   /api/inquiries/:id/note
+GET    /api/inquiries/stats
+```
+
+### Subscription APIs (NEW)
+
+```
+GET    /api/subscriptions
+GET    /api/subscriptions/:id
+POST   /api/subscriptions (from website form)
+PUT    /api/subscriptions/:id
+DELETE /api/subscriptions/:id
+POST   /api/subscriptions/:id/unsubscribe
+POST   /api/subscriptions/bulk-email
+GET    /api/subscriptions/stats
+POST   /api/subscriptions/export
+```
+
+### Report APIs
+
+```
+GET    /api/reports/dashboard
+GET    /api/reports/tickets
+GET    /api/reports/schools
+GET    /api/reports/assets
+GET    /api/reports/technicians
+GET    /api/reports/vendors
+GET    /api/reports/sla-compliance
+POST   /api/reports/export
+GET    /api/reports/scheduled
+POST   /api/reports/schedule
+```
+
+### Notification APIs
+
+```
+GET    /api/notifications
+GET    /api/notifications/unread-count
+PUT    /api/notifications/:id/read
+PUT    /api/notifications/mark-all-read
+DELETE /api/notifications/:id
+```
+
+---
+
+## 7. UI/UX Structure
+
+### Admin Panel Layout
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ [≡] Cano Solutions LMS        [🔔 3] [👤 Admin Name ▼]      │
+├──────────┬──────────────────────────────────────────────────┤
+│          │                                                   │
+│ 📊 Dash  │                                                   │
+│ 🏫 Schools│              MAIN CONTENT AREA                   │
+│ 📦 Assets│                                                   │
+│ 🎫 Tickets│                                                   │
+│ 📈 Reports│                                                   │
+│ ─────────│                                                   │
+│ 📧 Inquiry│                                                   │
+│ 📮 Subscribe                                                 │
+│ ─────────│                                                   │
+│ 👥 Users │                                                   │
+│ ⚙️ Settings                                                  │
+│          │                                                   │
+│          │                                                   │
+│ [Logout] │                                                   │
+└──────────┴──────────────────────────────────────────────────┘
+```
+
+### Sidebar Navigation Structure
+
+**Primary Section:**
+- Dashboard (Overview)
+- Schools (List, Add, Import)
+- Assets (Inventory, Add, Warranty)
+- Tickets (All, New, Assigned, Resolved)
+- Reports (Analytics, Export)
+
+**Website Management Section:**
+- Inquiries (New, All, Responded)
+- Subscriptions (Active, All, Export)
+
+**System Section:**
+- Users (Team Members)
+- Settings (General, SLA, Notifications)
+
+### Responsive Design
+
+- **Desktop**: Full sidebar + content
+- **Tablet**: Collapsible sidebar
+- **Mobile**: Bottom navigation + hamburger menu
+
+---
+
+## 8. Security Implementation
+
+### Authentication
+- JWT (JSON Web Tokens) for session management
+- Refresh token mechanism
+- Password hashing with bcrypt
+- Rate limiting on login attempts
+- MFA (Multi-Factor Authentication) for admin roles
+
+### Authorization
+- Role-Based Access Control (RBAC)
+- Permission matrix per role
+- Row-level security (users see only their schools)
+- API endpoint protection with middleware
+
+### Data Protection
+- HTTPS/TLS encryption
+- Input validation and sanitization
+- SQL/NoSQL injection prevention
+- XSS protection
+- CSRF tokens
+- File upload validation (type, size, malware scan)
+- Sensitive data encryption at rest
+
+### Audit Trail
+- Log all user actions
+- Track data modifications (who, what, when)
+- IP address logging
+- Session tracking
+- Failed login attempts
+
+---
+
+## 9. Integration Points
+
+### Email Integration
+- SMTP configuration for notifications
+- Email templates for:
+  - Ticket created
+  - Ticket assigned
+  - Ticket resolved
+  - SLA breach alerts
+  - Inquiry responses
+  - Newsletter campaigns
+
+### SMS Integration (Optional)
+- Critical alert notifications
+- OTP for authentication
+
+### File Storage
+- MongoDB GridFS for small files
+- Cloud storage (AWS S3/Cloudflare R2) for large files
+- CDN for asset delivery
+
+### Third-Party Integrations
+- Google OAuth (optional SSO)
+- Payment Gateway (for vendor billing)
+- WhatsApp Business API (notifications)
+- Analytics (Google Analytics)
+
+---
+
+## 10. Deployment Architecture
+
+### Production Environment
+
+```
+Internet
+    ↓
+[Load Balancer / Cloudflare]
+    ↓
+[Next.js Application Server] (Multiple instances)
+    ↓
+[Express.js API Server] (Multiple instances)
+    ↓
+[MongoDB Cluster] (Primary + Replicas)
+    ↓
+[Backup Storage]
+```
+
+### Infrastructure Requirements
+
+- **Web Server**: Node.js 18+ (PM2 for process management)
+- **Database**: MongoDB 6.0+ (Replica Set)
+- **Storage**: 100GB initial (scalable)
+- **Memory**: 8GB minimum per server
+- **CDN**: Cloudflare or similar
+- **SSL**: Let's Encrypt or commercial certificate
+
+---
+
+## 11. Performance Optimization
+
+### Frontend
+- Next.js SSR for faster initial load
+- Image optimization
+- Code splitting
+- Lazy loading for components
+- PWA capabilities
+
+### Backend
+- Database query optimization
+- Caching (Redis) for frequent queries
+- Pagination for large datasets
+- Background jobs for heavy tasks
+- API response compression
+
+### Database
+- Proper indexing
+- Query optimization
+- Connection pooling
+- Regular maintenance
+
+---
+
+## 12. Monitoring & Logging
+
+### Application Monitoring
+- Error tracking (Sentry)
+- Performance monitoring (New Relic/DataDog)
+- Uptime monitoring
+- API response time tracking
+
+### Logging
+- Application logs (Winston/Pino)
+- Access logs
+- Error logs
+- Audit logs
+- Log aggregation (ELK Stack optional)
+
+### Alerts
+- Server down alerts
+- High error rate
+- Database connection issues
+- SLA breach warnings
+- Disk space warnings
+
+---
+
+## 13. Development Workflow
+
+### Version Control
+- Git repository (GitHub/GitLab)
+- Branch strategy: main, develop, feature branches
+- Pull request reviews
+- Semantic versioning
+
+### CI/CD Pipeline
+```
+Push to Git → Run Tests → Build → Deploy to Staging → Manual Approval → Deploy to Production
+```
+
+### Testing Strategy
+- Unit tests (Jest)
+- Integration tests
+- API tests (Postman/Newman)
+- Manual QA testing
+- User acceptance testing
+
+---
+
+## 14. Maintenance & Support
+
+### Backup Strategy
+- Daily automated database backups
+- Weekly full system backups
+- 30-day retention policy
+- Off-site backup storage
+- Regular restore testing
+
+### Update Schedule
+- Security patches: Immediate
+- Minor updates: Monthly
+- Major features: Quarterly
+- Database optimization: Monthly
+
+### Support Levels
+- **L1**: User queries, password resets
+- **L2**: Bug fixes, configuration changes
+- **L3**: Architecture changes, major issues
+
+---
+
+## 15. Future Enhancements
+
+### Phase 2 Features
+- Mobile app for technicians (React Native)
+- Offline mode for field work
+- Advanced analytics with ML
+- Predictive maintenance alerts
+- Chatbot for common queries
+- Integration with school ERP systems
+
+### Phase 3 Features
+- Multi-language support
+- Voice-based ticket creation
+- IoT sensor integration for equipment
+- Blockchain for audit trail
+- AR/VR for remote assistance
+
+---
+
+## 16. Cost Estimation
+
+### Initial Setup
+- Development: 3-4 months
+- Infrastructure setup: 1 week
+- Data migration: 2 weeks
+- Training: 1 week
+
+### Monthly Operating Costs
+- Hosting: $50-200
+- Database: $30-100
+- Email service: $10-50
+- SMS service: $20-100 (if used)
+- CDN: $10-50
+- Monitoring: $20-50
+- **Total**: ~$140-550/month
+
+---
+
+## 17. Success Metrics
+
+### KPIs to Track
+- Average ticket resolution time
+- SLA compliance rate
+- User satisfaction score
+- System uptime percentage
+- Inquiry response rate
+- Number of active schools
+- Assets under management
+- Cost savings from preventive maintenance
+
+---
+
+## 18. Risk Mitigation
+
+### Identified Risks
+1. Data loss → Regular backups + replication
+2. Downtime → Load balancing + redundancy
+3. Security breach → Regular audits + updates
+4. Poor adoption → Training + user-friendly UI
+5. Performance issues → Monitoring + optimization
+
+---
+
+## 19. Documentation Requirements
+
+- **Technical Documentation**: Architecture, API docs, database schema
+- **User Manual**: For each role (admin, school user, technician)
+- **Admin Guide**: System configuration, troubleshooting
+- **API Documentation**: Swagger/OpenAPI specification
+- **Deployment Guide**: Server setup, configuration
+
+---
+
+## 20. Project Timeline
+
+### Phase 1: Foundation (Month 1-2)
+- Setup infrastructure
+- User authentication
+- School & asset management
+- Basic ticket system
+
+### Phase 2: Core Features (Month 2-3)
+- Complete ticket lifecycle
+- Reports & analytics
+- Inquiry & subscription management
+- Notifications
+
+### Phase 3: Polish & Launch (Month 3-4)
+- UI/UX refinement
+- Testing & bug fixes
+- Documentation
+- Training & deployment
+
+---
+
+**END OF ARCHITECTURE DOCUMENT**
+
+For implementation, prioritize:
+1. User authentication & roles
+2. School management
+3. Basic ticket system
+4. Dashboard analytics
+5. Inquiry/subscription integration
+6. Advanced features
+
+This architecture is designed to scale from 50 to 500+ schools with minimal changes.
