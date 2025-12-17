@@ -22,6 +22,7 @@ export default function NewsletterSubscription() {
       await ApiService.createSubscription(email);
       setMessage("Successfully subscribed to our newsletter!");
       setEmail("");
+      setTimeout(() => setMessage(""), 3000);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Failed to subscribe");
     } finally {

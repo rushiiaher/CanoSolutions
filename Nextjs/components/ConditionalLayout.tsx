@@ -8,8 +8,9 @@ import WhatsAppWidget from '@/components/WhatsAppWidget';
 export default function ConditionalLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAdminRoute = pathname?.startsWith('/admin');
+  const isHelpRoute = pathname?.startsWith('/help');
 
-  if (isAdminRoute) {
+  if (isAdminRoute || isHelpRoute) {
     return <main>{children}</main>;
   }
 

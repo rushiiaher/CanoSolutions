@@ -22,13 +22,12 @@ import { useState } from "react"
 import { cn } from "@/lib/utils"
 
 const formSchema = z.object({
-  firstName: z.string().min(2, "First name is too short").max(50),
-  lastName: z.string().min(2, "Last name is too short").max(50),
+  fullName: z.string().min(2, "Full name is required").max(100),
   email: z.string().email("Invalid email address"),
-  phone: z.string().min(10, "Invalid phone number"),
-  company: z.string().optional(),
+  phone: z.string().min(1, "Phone number is required"),
   service: z.string().min(1, "Please select a service"),
-  message: z.string().min(10, "Message is too short").max(500),
+  company: z.string().optional(),
+  message: z.string().min(10, "Project brief is required").max(1000),
 });
 
 type ConsultationFormProps = {
@@ -50,12 +49,11 @@ export default function ConsultationForm({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      fullName: "",
       email: "",
       phone: "",
-      company: "",
       service: "",
+      company: "",
       message: "",
     },
   });
@@ -64,9 +62,18 @@ export default function ConsultationForm({
     setIsSubmitting(true)
     setSubmitMessage("")
     try {
-      await ApiService.createInquiry({ ...values, company: values.company || "" })
-      setSubmitMessage("Your inquiry has been sent successfully!")
+      await ApiService.createInquiry({ 
+        firstName: values.fullName.split(' ')[0] || values.fullName,
+        lastName: values.fullName.split(' ').slice(1).join(' ') || '',
+        email: values.email,
+        phone: values.phone || '',
+        company: values.company || '',
+        service: values.service,
+        message: values.message
+      })
+      setSubmitMessage("Thank you! Your consultation request has been submitted successfully. We'll get back to you within 24 hours.")
       form.reset()
+      setTimeout(() => setSubmitMessage(""), 5000)
     } catch (error) {
       setSubmitMessage(error instanceof Error ? error.message : "Failed to send inquiry.")
     } finally {
@@ -77,28 +84,29 @@ export default function ConsultationForm({
   return (
     <Card
       className={cn(
-        "transition-all duration-300",
+        "transition-all duration-300 border-0 overflow-hidden",
         {
-          "bg-white/90 backdrop-blur-sm shadow-2xl": variant === "hero",
-          "bg-white text-gray-900 shadow-lg": variant === "section",
-          "bg-white": variant === "contact",
+          "bg-white/95 backdrop-blur-md shadow-2xl hover:shadow-3xl": variant === "hero",
+          "bg-white text-gray-900 shadow-xl hover:shadow-2xl": variant === "section",
+          "bg-white shadow-lg": variant === "contact",
         },
         className
       )}
     >
-      <CardHeader>
+      <CardHeader className="text-center pb-4">
         <CardTitle
-          className={cn("font-bold", {
-            "text-textPrimary text-2xl": variant === "hero",
-            "text-textPrimary text-3xl": variant === "section",
+          className={cn("font-bold text-gray-900", {
+            "text-2xl md:text-3xl": variant === "hero",
+            "text-3xl md:text-4xl": variant === "section",
+            "text-2xl": variant === "contact",
           })}
         >
           {title}
         </CardTitle>
         <CardDescription
-          className={cn({
-            "text-textSecondary": variant === "hero" || variant === "contact",
-            "text-textSecondary": variant === "section",
+          className={cn("text-base mt-2", {
+            "text-gray-600": variant === "hero" || variant === "contact",
+            "text-gray-600": variant === "section",
           })}
         >
           {description}
@@ -106,16 +114,39 @@ export default function ConsultationForm({
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+            <FormField
+              control={form.control}
+              name="fullName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm font-semibold text-gray-700">Full Name *</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="Enter your full name" 
+                      className="h-11 border-gray-300 focus:border-primary focus:ring-primary"
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <FormField
                 control={form.control}
-                name="firstName"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>First Name</FormLabel>
+                    <FormLabel className="text-sm font-semibold text-gray-700">Email Address *</FormLabel>
                     <FormControl>
-                      <Input placeholder="First Name" {...field} />
+                      <Input 
+                        type="email"
+                        placeholder="your@email.com" 
+                        className="h-11 border-gray-300 focus:border-primary focus:ring-primary"
+                        {...field} 
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -123,107 +154,113 @@ export default function ConsultationForm({
               />
               <FormField
                 control={form.control}
-                name="lastName"
+                name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Last Name</FormLabel>
+                    <FormLabel className="text-sm font-semibold text-gray-700">Phone *</FormLabel>
                     <FormControl>
-                      <Input placeholder="Last Name" {...field} />
+                      <Input 
+                        type="tel"
+                        placeholder="+91 98765 43210" 
+                        className="h-11 border-gray-300 focus:border-primary focus:ring-primary"
+                        {...field} 
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="user@gmail.com" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone</FormLabel>
-                  <FormControl>
-                    <Input placeholder="+91 73874 01021" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="company"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Company (Optional)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Your Company" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
             <FormField
               control={form.control}
               name="service"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Interested Service</FormLabel>
+                  <FormLabel className="text-sm font-semibold text-gray-700">What service are you interested in? *</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a service" />
+                      <SelectTrigger className="h-11 border-gray-300 focus:border-primary focus:ring-primary">
+                        <SelectValue placeholder="Choose a service..." />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       <SelectItem value="Web Development">Web Development</SelectItem>
                       <SelectItem value="Android Development">Android Development</SelectItem>
-                      <SelectItem value="AI & Machine Learning">AI & Machine Learning</SelectItem>
-                      <SelectItem value="LMS/IoT Solutions">LMS/IoT Solutions</SelectItem>
-                      <SelectItem value="Cloud Infrastructure">Cloud Infrastructure</SelectItem>
+                      <SelectItem value="AI Solutions">AI Solutions</SelectItem>
+                      <SelectItem value="LMS/IoT Systems">LMS/IoT Systems</SelectItem>
+                      <SelectItem value="Cloud Services">Cloud Services</SelectItem>
                       <SelectItem value="Digital Marketing">Digital Marketing</SelectItem>
+                      <SelectItem value="Not sure / Let's discuss">Not sure / Let's discuss</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
-              name="message"
+              name="company"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Message</FormLabel>
+                  <FormLabel className="text-xs font-medium text-gray-500">Company (optional)</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="How can we help you?" {...field} />
+                    <Input 
+                      placeholder="Your company name" 
+                      className="h-10 text-sm border-gray-300 focus:border-primary focus:ring-primary"
+                      {...field} 
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? "Sending..." : "Send Inquiry"}
+
+            <FormField
+              control={form.control}
+              name="message"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm font-semibold text-gray-700">Project Brief / Message *</FormLabel>
+                  <FormControl>
+                    <Textarea 
+                      placeholder="Tell us about your project, requirements, timeline, or any specific questions you have..."
+                      className="min-h-[100px] border-gray-300 focus:border-primary focus:ring-primary resize-none"
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button 
+              type="submit" 
+              className="w-full h-12 bg-primary hover:bg-primary/90 text-white font-semibold text-base transition-all duration-300 transform hover:scale-[1.02] shadow-lg" 
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  Sending...
+                </div>
+              ) : (
+                "Get Free Consultation →"
+              )}
             </Button>
+            
             {submitMessage && (
-              <p
-                className={cn("text-sm text-center", {
-                  "text-secondary": submitMessage.includes("success"),
-                  "text-red-600": !submitMessage.includes("success"),
-                })}
+              <div
+                className={cn(
+                  "p-4 rounded-lg text-sm text-center font-medium transition-all duration-300",
+                  {
+                    "bg-green-50 text-green-700 border border-green-200": submitMessage.includes("successfully"),
+                    "bg-red-50 text-red-700 border border-red-200": !submitMessage.includes("successfully"),
+                  }
+                )}
               >
                 {submitMessage}
-              </p>
+              </div>
             )}
           </form>
         </Form>

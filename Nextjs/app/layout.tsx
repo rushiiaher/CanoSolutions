@@ -1,18 +1,13 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { JetBrains_Mono, Poppins } from "next/font/google"
+import { Inter } from "next/font/google"
 import "./globals.css"
 import ConditionalLayout from "@/components/ConditionalLayout"
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-})
-
-const poppins = Poppins({
+const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
+  variable: "--font-inter",
 })
 
 export const metadata: Metadata = {
@@ -36,7 +31,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${jetbrainsMono.variable} ${poppins.variable} font-poppins bg-white text-textPrimary`}>
+      <body className={`${inter.variable} font-sans bg-white text-textPrimary`}>
         <ConditionalLayout>{children}</ConditionalLayout>
       </body>
     </html>

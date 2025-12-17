@@ -19,14 +19,14 @@ const config: Config = {
     },
     extend: {
       colors: {
-        primary: "#1E88E5",
+        primary: "#0070ff",
         secondary: "#43A047",
         textPrimary: "#333333",
         textSecondary: "#333333",
         neutralCard: "#F5F5F5",
         borders: "#E5E7EB",
         success: "#43A047",
-        techBlue: "#1E88E5",
+        techBlue: "#0070ff",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -58,8 +58,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        poppins: ["var(--font-poppins)", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        sans: ["var(--font-inter)", "Inter", "sans-serif"],
+        mono: ["var(--font-inter)", "Inter", "sans-serif"],
       },
       fontSize: {
         h1: "48px",

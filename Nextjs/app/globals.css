@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Poppins font is loaded via Google Fonts in layout.tsx */
+/* Inter font is loaded via Google Fonts in layout.tsx */
 
 @layer base {
   :root {
@@ -56,7 +56,7 @@
   
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-poppins), sans-serif;
+    font-family: 'Inter', sans-serif;
     line-height: 1.6;
   }
 
@@ -70,7 +70,7 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-poppins), sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.2;
@@ -95,7 +95,7 @@
   }
 
   .tech-mono {
-    font-family: var(--font-mono);
+    font-family: var(--font-inter), 'Inter', sans-serif;
   }
 }
 

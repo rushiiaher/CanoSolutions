@@ -1,53 +1,87 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient } from 'mongodb';
+import { NextRequest, NextResponse } from 'next/server'
+import { hashPassword, verifyPassword, generateToken } from '@/lib/auth'
+import { getDatabase } from '@/lib/db-utils'
 
-export const dynamic = 'force-dynamic';
-
-const client = new MongoClient(process.env.MONGODB_URI!);
+export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password } = await request.json();
+    const { email, password } = await request.json()
 
     if (!email || !password) {
       return NextResponse.json(
-        { error: 'Email and password are required' },
+        { success: false, message: 'Email and password are required' },
         { status: 400 }
-      );
+      )
     }
 
-    // Simple auth for demo - in production use proper password hashing
-    if (email === 'admin@canosolutions.com' && password === 'admin123') {
-      const token = 'demo-token-' + Date.now();
-      
-      const response = NextResponse.json({
-        success: true,
-        user: {
-          id: '1',
-          name: 'Admin User',
-          email: 'admin@canosolutions.com',
-          role: 'super_admin'
-        }
-      });
-
-      response.cookies.set('auth-token', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
-        maxAge: 86400
-      });
-
-      return response;
+    const db = await getDatabase()
+    
+    // Find user
+    const user = await db.collection('users').findOne({ email })
+    if (!user) {
+      return NextResponse.json(
+        { success: false, message: 'Invalid credentials' },
+        { status: 401 }
+      )
     }
 
-    return NextResponse.json(
-      { error: 'Invalid credentials' },
-      { status: 401 }
-    );
+    // Verify password
+    const isValidPassword = await verifyPassword(password, user.password_hash)
+    if (!isValidPassword) {
+      return NextResponse.json(
+        { success: false, message: 'Invalid credentials' },
+        { status: 401 }
+      )
+    }
+
+    // Check if user is active
+    if (user.status !== 'active') {
+      return NextResponse.json(
+        { success: false, message: 'Account is suspended' },
+        { status: 403 }
+      )
+    }
+
+    // Update last login
+    await db.collection('users').updateOne(
+      { _id: user._id },
+      { 
+        $set: { last_login: new Date() },
+        $inc: { login_count: 1 }
+      }
+    )
+
+    // Generate token
+    const token = generateToken(user._id.toString(), user.email, user.role)
+
+    // Set cookie
+    const response = NextResponse.json({
+      success: true,
+      message: 'Login successful',
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }
+    })
+
+    response.cookies.set('auth-token', token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60, // 7 days
+      path: '/'
+    })
+
+    return response
+
   } catch (error) {
+    console.error('Login error:', error)
     return NextResponse.json(
-      { error: 'Login failed' },
+      { success: false, message: 'Internal server error' },
       { status: 500 }
-    );
+    )
   }
 }

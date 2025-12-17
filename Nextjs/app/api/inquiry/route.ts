@@ -59,11 +59,11 @@ export async function GET() {
       .sort({ createdAt: -1 })
       .toArray();
 
-    return NextResponse.json(inquiries);
+    return NextResponse.json({ success: true, data: inquiries });
   } catch (error) {
     console.error('Error fetching inquiries:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch inquiries' },
+      { success: false, error: 'Failed to fetch inquiries' },
       { status: 500 }
     );
   } finally {
