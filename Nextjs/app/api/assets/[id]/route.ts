@@ -4,7 +4,11 @@ import { getDatabase, toObjectId } from '@/lib/db-utils'
 
 export const dynamic = 'force-dynamic'
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(
+  request: NextRequest,
+  props: { params: Promise<{ id: string }> }
+) {
+  const params = await props.params;
   const authResult = await requireAuth(request, ['super_admin', 'admin'])
   if ('error' in authResult) {
     return NextResponse.json({ success: false, message: authResult.error }, { status: authResult.status })
@@ -15,10 +19,10 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     const { status, condition, location } = body
 
     const db = await getDatabase()
-    
+
     const result = await db.collection('assets').updateOne(
       { _id: toObjectId(params.id) },
-      { 
+      {
         $set: {
           status,
           condition,
@@ -49,7 +53,11 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  props: { params: Promise<{ id: string }> }
+) {
+  const params = await props.params;
   const authResult = await requireAuth(request, ['super_admin'])
   if ('error' in authResult) {
     return NextResponse.json({ success: false, message: authResult.error }, { status: authResult.status })
@@ -57,7 +65,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
 
   try {
     const db = await getDatabase()
-    
+
     const asset = await db.collection('assets').findOne({ _id: toObjectId(params.id) })
     if (!asset) {
       return NextResponse.json(
@@ -70,7 +78,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
 
     await db.collection('products').updateOne(
       { _id: toObjectId(asset.product_id) },
-      { 
+      {
         $set: {
           status: 'available',
           updated_at: new Date()

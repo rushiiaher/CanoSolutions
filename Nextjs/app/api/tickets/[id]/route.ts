@@ -7,8 +7,9 @@ export const dynamic = 'force-dynamic'
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
+  const params = await props.params;
   const authResult = await requireAuth(request, ['super_admin', 'admin'])
   if ('error' in authResult) {
     return NextResponse.json({ success: false, message: authResult.error }, { status: authResult.status })
@@ -29,11 +30,11 @@ export async function PUT(
 
     const result = await db.collection('tickets').updateOne(
       { _id: new ObjectId(params.id) },
-      { 
-        $set: { 
+      {
+        $set: {
           status,
           updated_at: new Date()
-        } 
+        }
       }
     )
 

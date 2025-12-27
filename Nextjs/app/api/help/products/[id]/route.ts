@@ -4,10 +4,14 @@ import { getDatabase } from '@/lib/db-utils'
 
 export const dynamic = 'force-dynamic'
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(
+  request: NextRequest,
+  props: { params: Promise<{ id: string }> }
+) {
+  const params = await props.params;
   try {
     const user = await getAuthUser(request)
-    
+
     if (!user || user.role !== 'super_admin') {
       return NextResponse.json(
         { success: false, message: 'Unauthorized' },
@@ -78,10 +82,14 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  props: { params: Promise<{ id: string }> }
+) {
+  const params = await props.params;
   try {
     const user = await getAuthUser(request)
-    
+
     if (!user || user.role !== 'super_admin') {
       return NextResponse.json(
         { success: false, message: 'Unauthorized' },

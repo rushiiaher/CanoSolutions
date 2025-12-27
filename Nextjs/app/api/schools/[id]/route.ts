@@ -7,8 +7,9 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
+  const params = await props.params;
   const authResult = await requireAuth(request, ['super_admin', 'admin', 'school_admin'])
   if ('error' in authResult) {
     return NextResponse.json({ success: false, message: authResult.error }, { status: authResult.status })
@@ -50,8 +51,9 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
+  const params = await props.params;
   const authResult = await requireAuth(request, ['super_admin', 'admin'])
   if ('error' in authResult) {
     return NextResponse.json({ success: false, message: authResult.error }, { status: authResult.status })
@@ -69,7 +71,7 @@ export async function PUT(
     }
 
     const db = await getDatabase()
-    
+
     // Check if school exists
     const existingSchool = await db.collection('schools').findOne({ _id: toObjectId(id) })
     if (!existingSchool) {
@@ -81,7 +83,7 @@ export async function PUT(
 
     // If code is being updated, check for duplicates
     if (updateData.code && updateData.code !== existingSchool.code) {
-      const duplicateSchool = await db.collection('schools').findOne({ 
+      const duplicateSchool = await db.collection('schools').findOne({
         code: updateData.code,
         _id: { $ne: toObjectId(id) }
       })
@@ -95,7 +97,7 @@ export async function PUT(
 
     const result = await db.collection('schools').updateOne(
       { _id: toObjectId(id) },
-      { 
+      {
         $set: {
           ...updateData,
           updated_at: new Date()
@@ -126,8 +128,9 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
+  const params = await props.params;
   const authResult = await requireAuth(request, ['super_admin'])
   if ('error' in authResult) {
     return NextResponse.json({ success: false, message: authResult.error }, { status: authResult.status })
@@ -144,7 +147,7 @@ export async function DELETE(
     }
 
     const db = await getDatabase()
-    
+
     // Check if school has assets or tickets
     const [assetsCount, ticketsCount] = await Promise.all([
       db.collection('assets').countDocuments({ school_id: id }),
