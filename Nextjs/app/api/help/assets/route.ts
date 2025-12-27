@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
+import { getDatabase } from '@/lib/db-utils';
 
 export const dynamic = 'force-dynamic';
-
-const client = new MongoClient(process.env.MONGODB_URI!);
 
 export async function GET(request: NextRequest) {
   try {
@@ -17,18 +16,17 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    await client.connect();
-    const db = client.db('canosolutions');
+    const db = await getDatabase();
 
     console.log('Fetching assets for school_id:', school_id);
-    
+
     // Query assets collection (not products) - assets link products to schools
     const assets = await db.collection('assets')
       .aggregate([
-        { 
-          $match: { 
-            school_id: school_id 
-          } 
+        {
+          $match: {
+            school_id: school_id
+          }
         },
         {
           $lookup: {
@@ -74,7 +72,5 @@ export async function GET(request: NextRequest) {
       { success: false, error: 'Failed to fetch assets' },
       { status: 500 }
     );
-  } finally {
-    await client.close();
   }
 }

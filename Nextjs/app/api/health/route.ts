@@ -1,21 +1,18 @@
 import { NextResponse } from 'next/server';
-import { MongoClient } from 'mongodb';
+import { getDatabase } from '@/lib/db-utils';
 
 export const dynamic = 'force-dynamic';
 
-const client = new MongoClient(process.env.MONGODB_URI!);
-
 export async function GET() {
   try {
-    await client.connect();
-    const db = client.db('canosolutions');
-    
+    const db = await getDatabase();
+
     await db.admin().ping();
     const stats = await Promise.all([
       db.collection('inquiries').countDocuments(),
       db.collection('subscriptions').countDocuments()
     ]);
-    
+
     return NextResponse.json({
       status: 'healthy',
       timestamp: new Date().toISOString(),
@@ -33,7 +30,5 @@ export async function GET() {
       },
       { status: 500 }
     );
-  } finally {
-    await client.close();
   }
 }

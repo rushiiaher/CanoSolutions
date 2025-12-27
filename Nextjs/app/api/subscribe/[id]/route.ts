@@ -1,17 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
+import { getDatabase } from '@/lib/db-utils';
 
 export const dynamic = 'force-dynamic';
-
-const client = new MongoClient(process.env.MONGODB_URI!);
 
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    await client.connect();
-    const db = client.db('canosolutions');
+    const db = await getDatabase();
 
     const result = await db.collection('subscriptions').deleteOne({
       _id: new ObjectId(params.id)
@@ -34,7 +32,5 @@ export async function DELETE(
       { success: false, error: 'Failed to delete subscription' },
       { status: 500 }
     );
-  } finally {
-    await client.close();
   }
 }

@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient } from 'mongodb';
+import { getDatabase } from '@/lib/db-utils';
 
 export const dynamic = 'force-dynamic';
-
-const client = new MongoClient(process.env.MONGODB_URI!);
 
 export async function POST(request: NextRequest) {
   try {
@@ -16,8 +14,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    await client.connect();
-    const db = client.db('canosolutions');
+    const db = await getDatabase();
 
     const inquiry = {
       firstName,
@@ -44,16 +41,13 @@ export async function POST(request: NextRequest) {
       { error: 'Failed to submit inquiry' },
       { status: 500 }
     );
-  } finally {
-    await client.close();
   }
 }
 
 export async function GET() {
   try {
-    await client.connect();
-    const db = client.db('canosolutions');
-    
+    const db = await getDatabase();
+
     const inquiries = await db.collection('inquiries')
       .find({})
       .sort({ createdAt: -1 })
@@ -66,7 +60,5 @@ export async function GET() {
       { success: false, error: 'Failed to fetch inquiries' },
       { status: 500 }
     );
-  } finally {
-    await client.close();
   }
 }
